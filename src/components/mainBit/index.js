@@ -4,7 +4,6 @@ import * as ACTIONS from '../../redux/actions.js';
 import textToSpeech from '../textToSpeech';
 import wordsArray from '../greetings';
 import Button from 'material-ui/Button';
-// import ActionFlightTakeoff from 'material-ui/svg-icons/action/flight-takeoff';
 import DoneIcon from 'material-ui-icons/Done';
 import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
@@ -35,24 +34,28 @@ class MainBit extends Component {
 		const CONTINUE_LABEL = 'Continue';
 		const CHECK_LABEL = 'Check';
 
-
 		const randomWordObjGen = () => {
 			return wordsArray[Math.floor(Math.random() * wordsArray.length)];
 		};
 
-		const onCheckClickHandler = () => {
+		const correctAnswer = () => {
 			if (answerBox === currentWord.english && mode == KOREAN) {
+				return true;
+			}
+			if (answerBox === currentWord.korean && mode == ENGLISH) {
+				return true;
+			}
+			return false;
+		}
+
+		const onCheckClickHandler = () => {
+			if (correctAnswer()) {
 				scorePlusOne();
 				toggleContinueAction();
 				updateAnswerAttempt('correct');
 			} else {
 				updateAnswerAttempt('incorrect');
 			}
-			// if (answerBox === currentWord.korean && mode == ENGLISH) {
-			// 	scorePlusOne();
-			// 	toggleContinueAction();
-			// 	updateAnswerAttempt('correct');
-			// }
 			totalPlusOne();
 		};
 
