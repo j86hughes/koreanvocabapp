@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 import answerBox from './modules/answerBox/reducer';
 import currentWord from './modules/updateWord/reducer';
-import score from './modules/score/reducer.js';
-import total from './modules/totalWords/reducer.js';
-import mode from './modules/mode/reducer.js';
-import showContinue from './modules/showContinue/reducer.js';
+import score from './modules/score/reducer';
+import total from './modules/totalWords/reducer';
+import mode from './modules/mode/reducer';
+import showContinue from './modules/showContinue/reducer';
+import answerAttempt from './modules/answerAttempt/reducer';
 
 const allReducers = combineReducers({
   answerBox,
@@ -13,6 +14,7 @@ const allReducers = combineReducers({
   total,
   mode,
   showContinue,
+  answerAttempt,
 })
 
 export default allReducers;

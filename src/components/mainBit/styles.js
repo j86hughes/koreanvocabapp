@@ -3,11 +3,17 @@ export default {
   app: {
     textAlign: 'center',
     fontFamily: 'arial',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    backgroundColor: 'red',
+
   },
   appHeader: {
     backgroundColor: '#222',
-    height: 150,
     padding: 20,
+    minHeight: 220,
     color: 'white',
   },
   appTitle: {
@@ -17,10 +23,12 @@ export default {
     fontSize: 'large',
   },
   answerSectionContainer: {
+    flexGrow: 2,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'gray',
   },
   input: {
     marginTop: 50,
@@ -29,6 +37,7 @@ export default {
     textAlign: 'center',
   },
   scoreText: {
+    display: 'flex',
     color: 'white',
   },
   changeModeButton: {
@@ -38,6 +47,14 @@ export default {
     width: 100,
     marginTop: 25,
     fontSize: 15,
-    color: 'blue',
+    backgroundColor: 'blue',
+    color: 'white',
+  },
+  continueButton: {
+    width: 100,
+    marginTop: 25,
+    fontSize: 15,
+    backgroundColor: 'yellow',
+    color: 'black',
   },
 }

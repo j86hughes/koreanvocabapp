@@ -38,3 +38,10 @@ export const showContinue = () => {
     type: 'SHOW_CONTINUE',
   }
 }
+
+export const updateAnswerAttempt = (attempt) => {
+  return {
+    type: 'UPDATE_ANSWER_ATTEMPT',
+    attempt,
+  }
+}
