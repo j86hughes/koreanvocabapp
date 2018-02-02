@@ -3,12 +3,10 @@ export default {
   app: {
     textAlign: 'center',
     fontFamily: 'arial',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
     backgroundColor: 'red',
-
   },
   appHeader: {
     backgroundColor: '#222',

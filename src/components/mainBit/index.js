@@ -4,7 +4,6 @@ import * as ACTIONS from '../../redux/actions.js';
 import textToSpeech from '../textToSpeech';
 import wordsArray from '../greetings';
 import Button from 'material-ui/Button';
-import DoneIcon from 'material-ui-icons/Done';
 import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
@@ -118,13 +117,13 @@ class MainBit extends Component {
 
 const mapStateToProps = state => {
 	return {
-		answerBox: state.answerBox,
-		currentWord: state.currentWord,
-		score: state.score,
-		total: state.total,
-		mode: state.mode,
-		showContinue: state.showContinue,
-		answerAttempt: state.answerAttempt,
+		answerBox: state.AnswerBox,
+		currentWord: state.UpdateWord,
+		score: state.Score,
+		total: state.TotalWords,
+		mode: state.Mode,
+		showContinue: state.ShowContinue,
+		answerAttempt: state.AnswerAttempt,
 	};
 };
 

@@ -1,20 +1,27 @@
 import { combineReducers } from 'redux';
-import answerBox from './modules/answerBox/reducer';
-import currentWord from './modules/updateWord/reducer';
-import score from './modules/score/reducer';
-import total from './modules/totalWords/reducer';
-import mode from './modules/mode/reducer';
-import showContinue from './modules/showContinue/reducer';
-import answerAttempt from './modules/answerAttempt/reducer';
+import AnswerBox from './modules/AnswerBox/reducer';
+import { STORE_NAME as AnswerBoxName } from './modules/AnswerBox/constants';
+import CurrentWord from './modules/UpdateWord/reducer';
+import { STORE_NAME as UpdateWordName } from './modules/UpdateWord/constants';
+import Score from './modules/Score/reducer';
+import { STORE_NAME as ScoreName } from './modules/Score/constants';
+import Total from './modules/TotalWords/reducer';
+import { STORE_NAME as TotalName } from './modules/TotalWords/constants';
+import Mode from './modules/Mode/reducer';
+import { STORE_NAME as ModeName } from './modules/Mode/constants';
+import ShowContinue from './modules/ShowContinue/reducer';
+import { STORE_NAME as ShowContinueName } from './modules/ShowContinue/constants';
+import AnswerAttempt from './modules/AnswerAttempt/reducer';
+import { STORE_NAME as AnswerAttemptName } from './modules/AnswerAttempt/constants';
 
 const allReducers = combineReducers({
-  answerBox,
-  currentWord,
-  score,
-  total,
-  mode,
-  showContinue,
-  answerAttempt,
+  [AnswerBoxName]: AnswerBox,
+  [UpdateWordName]: CurrentWord,
+  [ScoreName]: Score,
+  [TotalName]: Total,
+  [ModeName]: Mode,
+  [ShowContinueName]: ShowContinue,
+  [AnswerAttemptName]: AnswerAttempt,
 })
 
 export default allReducers;
