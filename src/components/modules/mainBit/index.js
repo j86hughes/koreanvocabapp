@@ -84,7 +84,7 @@ class MainBit extends Component {
 						SCORE: {score} / {total}
 					</h3>
 					<div style={styles.vocabBox}>
-						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean : currentWord.english[0]}</h1>
+						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean[0] : currentWord.english[0]}</h1>
 						{answerAttempt === CORRECT && <Icon className="material-icons" style={styles.correctAnswer}>done</Icon>}
 						{answerAttempt === INCORRECT && <Icon className="material-icons" style={styles.incorrectAnswer}>clear</Icon>}
 					</div>
