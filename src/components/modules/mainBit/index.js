@@ -38,10 +38,10 @@ class MainBit extends Component {
 		const NONE = 'none';
 
 		const correctAnswer = () => {
-			if (answerBox === currentWord.english && mode === KOREAN) {
+			if ((currentWord.english.indexOf(answerBox) > -1) && mode === KOREAN) {
 				return true;
 			}
-			if (answerBox === currentWord.korean && mode === ENGLISH) {
+			if ((currentWord.korean.indexOf(answerBox) > -1) && mode === ENGLISH) {
 				return true;
 			}
 			return false;
@@ -84,7 +84,7 @@ class MainBit extends Component {
 						SCORE: {score} / {total}
 					</h3>
 					<div style={styles.vocabBox}>
-						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean : currentWord.english}</h1>
+						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean[0] : currentWord.english[0]}</h1>
 						{answerAttempt === CORRECT && <Icon className="material-icons" style={styles.correctAnswer}>done</Icon>}
 						{answerAttempt === INCORRECT && <Icon className="material-icons" style={styles.incorrectAnswer}>clear</Icon>}
 					</div>
@@ -100,7 +100,7 @@ class MainBit extends Component {
 							type="text"
 							style={styles.input}
 							onChange={e => {
-								updateTextBox(e.target.value);
+								updateTextBox(e.target.value.trim());
 							}}
 						/>
 						<div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
