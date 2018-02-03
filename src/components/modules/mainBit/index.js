@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as ACTIONS from '../../../redux/modules';
 import textToSpeech from '../textToSpeech';
-import wordsArray from '../greetings';
+import randomWordObjGen from '../wordGen';
+import wordsArray from '../vocab/greetings';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
@@ -36,10 +37,6 @@ class MainBit extends Component {
 		const INCORRECT = 'incorrect';
 		const NONE = 'none';
 
-		const randomWordObjGen = (array) => {
-			return array[Math.floor(Math.random() * array.length)];
-		};
-
 		const correctAnswer = () => {
 			if (answerBox === currentWord.english && mode == KOREAN) {
 				return true;
@@ -69,6 +66,14 @@ class MainBit extends Component {
 			updateAnswerAttempt(NONE);
 		}
 
+		const onSkipHandler = () => {
+			const newWordObj = randomWordObjGen(wordsArray);
+			updateCurrentWord(newWordObj);
+			textToSpeech(newWordObj.korean);
+			// updateAnswerAttempt(INCORRECT);
+			totalPlusOne();
+		}
+
 		const onModeClickHandler = () => {
 			mode == KOREAN ? changeMode(ENGLISH) : changeMode(KOREAN)
 		};
@@ -79,10 +84,10 @@ class MainBit extends Component {
 					<h3 style={styles.scoreText}>
 						SCORE: {score} / {total}
 					</h3>
-					<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+					<div style={styles.vocabBox}>
 						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean : currentWord.english}</h1>
-						{answerAttempt === CORRECT && <Icon className="material-icons" style={{color: 'lightGreen', fontSize: '50pt'}}>done</Icon>}
-						{answerAttempt === INCORRECT && <Icon className="material-icons" style={{color: 'red', fontSize: '50pt'}}>clear</Icon>}
+						{answerAttempt === CORRECT && <Icon className="material-icons" style={styles.correctAnswer}>done</Icon>}
+						{answerAttempt === INCORRECT && <Icon className="material-icons" style={styles.incorrectAnswer}>clear</Icon>}
 					</div>
 					<Button
 						style={{color: 'gray'}}
@@ -91,21 +96,32 @@ class MainBit extends Component {
 					</Button>
 				</header>
 				<div style={styles.answerSectionContainer}>
-					<input
-						type="text"
-						style={styles.input}
-						onChange={e => {
-							updateTextBox(e.target.value);
-						}}
-					/>
-					<Button
-						style={!showContinue ? styles.checkButton : styles.continueButton}
-						onClick={() =>
-							showContinue ? onContinueHandler() : onCheckClickHandler()
-						}
-					>
-						{showContinue ? CONTINUE_LABEL : CHECK_LABEL}
-					</Button>
+					<div style={styles.inputContainer}>
+						<input
+							type="text"
+							style={styles.input}
+							onChange={e => {
+								updateTextBox(e.target.value);
+							}}
+						/>
+						<div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
+							<Button
+								style={!showContinue ? styles.skipButton : styles.skipButtonDisabled}
+								disabled={showContinue}
+								onClick={() => onSkipHandler()}
+							>
+								Skip
+							</Button>
+							<Button
+								style={!showContinue ? styles.checkButton : styles.continueButton}
+								onClick={() =>
+									showContinue ? onContinueHandler() : onCheckClickHandler()
+								}
+							>
+								{showContinue ? CONTINUE_LABEL : CHECK_LABEL}
+							</Button>
+						</div>
+					</div>
 					<Button
 						style={styles.changeModeButton}
 						onClick={() => onModeClickHandler()}
