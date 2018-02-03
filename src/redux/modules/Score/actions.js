@@ -1,4 +1,4 @@
-import { SCORE_PLUS_ONE } from './actions';
+import { SCORE_PLUS_ONE } from './constants';
 
 export const scorePlusOne = () => {
   return {

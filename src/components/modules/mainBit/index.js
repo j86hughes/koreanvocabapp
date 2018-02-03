@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as ACTIONS from '../../redux/actions.js';
+import * as ACTIONS from '../../../redux/modules';
 import textToSpeech from '../textToSpeech';
 import wordsArray from '../greetings';
 import Button from 'material-ui/Button';
@@ -32,9 +32,12 @@ class MainBit extends Component {
 		const KOREAN = 'korean';
 		const CONTINUE_LABEL = 'Continue';
 		const CHECK_LABEL = 'Check';
+		const CORRECT = 'correct';
+		const INCORRECT = 'incorrect';
+		const NONE = 'none';
 
-		const randomWordObjGen = () => {
-			return wordsArray[Math.floor(Math.random() * wordsArray.length)];
+		const randomWordObjGen = (array) => {
+			return array[Math.floor(Math.random() * array.length)];
 		};
 
 		const correctAnswer = () => {
@@ -51,19 +54,19 @@ class MainBit extends Component {
 			if (correctAnswer()) {
 				scorePlusOne();
 				toggleContinueAction();
-				updateAnswerAttempt('correct');
+				updateAnswerAttempt(CORRECT);
 			} else {
-				updateAnswerAttempt('incorrect');
+				updateAnswerAttempt(INCORRECT);
 			}
 			totalPlusOne();
 		};
 
 		const onContinueHandler = () => {
-			const newWordObj = randomWordObjGen();
+			const newWordObj = randomWordObjGen(wordsArray);
 			toggleContinueAction();
 			updateCurrentWord(newWordObj);
 			textToSpeech(newWordObj.korean);
-			updateAnswerAttempt('none');
+			updateAnswerAttempt(NONE);
 		}
 
 		const onModeClickHandler = () => {
@@ -78,8 +81,8 @@ class MainBit extends Component {
 					</h3>
 					<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean : currentWord.english}</h1>
-						{answerAttempt === 'correct' && <Icon className="material-icons" style={{color: 'lightGreen', fontSize: '50pt'}}>done</Icon>}
-						{answerAttempt === 'incorrect' && <Icon className="material-icons" style={{color: 'red', fontSize: '50pt'}}>clear</Icon>}
+						{answerAttempt === CORRECT && <Icon className="material-icons" style={{color: 'lightGreen', fontSize: '50pt'}}>done</Icon>}
+						{answerAttempt === INCORRECT && <Icon className="material-icons" style={{color: 'red', fontSize: '50pt'}}>clear</Icon>}
 					</div>
 					<Button
 						style={{color: 'gray'}}
@@ -129,13 +132,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		updateTextBox: text => dispatch(ACTIONS.updateTextBox(text)),
-		updateCurrentWord: wordObj => dispatch(ACTIONS.updateCurrentWord(wordObj)),
-		scorePlusOne: () => dispatch(ACTIONS.scorePlusOne()),
-		totalPlusOne: () => dispatch(ACTIONS.totalPlusOne()),
-		changeMode: mode => dispatch(ACTIONS.changeMode(mode)),
-		toggleContinueAction: () => dispatch(ACTIONS.showContinue()),
-		updateAnswerAttempt: (attempt) => dispatch(ACTIONS.updateAnswerAttempt(attempt)),
+		updateTextBox: text => dispatch(ACTIONS.AnswerBox.updateTextBox(text)),
+		updateCurrentWord: wordObj => dispatch(ACTIONS.UpdateWord.updateCurrentWord(wordObj)),
+		scorePlusOne: () => dispatch(ACTIONS.Score.scorePlusOne()),
+		totalPlusOne: () => dispatch(ACTIONS.TotalWords.totalPlusOne()),
+		changeMode: mode => dispatch(ACTIONS.Mode.changeMode(mode)),
+		toggleContinueAction: () => dispatch(ACTIONS.ShowContinue.showContinue()),
+		updateAnswerAttempt: (attempt) => dispatch(ACTIONS.AnswerAttempt.updateAnswerAttempt(attempt)),
 	};
 };
 
