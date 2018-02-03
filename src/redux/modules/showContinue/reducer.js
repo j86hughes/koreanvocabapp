@@ -5,8 +5,10 @@ const showContinueReducer = (state = false, action) => {
     case SHOW_CONTINUE: {
       return !state;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default showContinueReducer;

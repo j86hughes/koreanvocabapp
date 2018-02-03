@@ -5,8 +5,10 @@ export const answerBoxReducer = (state = 'mate', action) => {
     case UPDATE_TEXT_BOX: {
       return action.text;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default answerBoxReducer;

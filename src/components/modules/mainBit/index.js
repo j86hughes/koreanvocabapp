@@ -38,10 +38,10 @@ class MainBit extends Component {
 		const NONE = 'none';
 
 		const correctAnswer = () => {
-			if (answerBox === currentWord.english && mode == KOREAN) {
+			if (answerBox === currentWord.english && mode === KOREAN) {
 				return true;
 			}
-			if (answerBox === currentWord.korean && mode == ENGLISH) {
+			if (answerBox === currentWord.korean && mode === ENGLISH) {
 				return true;
 			}
 			return false;
@@ -70,12 +70,11 @@ class MainBit extends Component {
 			const newWordObj = randomWordObjGen(wordsArray);
 			updateCurrentWord(newWordObj);
 			textToSpeech(newWordObj.korean);
-			// updateAnswerAttempt(INCORRECT);
 			totalPlusOne();
 		}
 
 		const onModeClickHandler = () => {
-			mode == KOREAN ? changeMode(ENGLISH) : changeMode(KOREAN)
+			mode === KOREAN ? changeMode(ENGLISH) : changeMode(KOREAN)
 		};
 
 		return (

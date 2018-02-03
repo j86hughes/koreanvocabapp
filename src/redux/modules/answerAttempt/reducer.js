@@ -5,8 +5,10 @@ const answerAttempt = (state = 'none', action) => {
     case UPDATE_ANSWER_ATTEMPT: {
       return action.attempt;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default answerAttempt;

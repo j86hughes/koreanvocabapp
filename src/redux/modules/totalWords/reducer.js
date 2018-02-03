@@ -6,8 +6,10 @@ export const totalReducer = (state = 0, action) => {
       const newState = state + 1;
       return newState;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default totalReducer;

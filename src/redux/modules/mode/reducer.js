@@ -5,8 +5,10 @@ const korToEngMode = (state = 'korean', action) => {
     case CHANGE_MODE: {
       return action.mode;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default korToEngMode;

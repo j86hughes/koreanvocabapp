@@ -6,8 +6,10 @@ export const scoreReducer = (state = 0, action) => {
       const newSate = state + 1;
       return newSate;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default scoreReducer;

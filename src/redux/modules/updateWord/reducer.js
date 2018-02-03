@@ -5,8 +5,10 @@ export const currentWordReducer = (state = wordsArray[2], action) => {
     case 'UPDATE_CURRENT_WORD': {
       return action.wordObj;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 }
 
 export default currentWordReducer;
