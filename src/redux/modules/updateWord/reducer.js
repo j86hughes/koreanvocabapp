@@ -1,4 +1,4 @@
-import wordsArray from '../../../components/modules/greetings';
+import wordsArray from '../../../components/modules/vocab/greetings';
 
 export const currentWordReducer = (state = wordsArray[2], action) => {
   switch (action.type) {
