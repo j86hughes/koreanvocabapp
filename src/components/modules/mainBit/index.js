@@ -43,7 +43,6 @@ class MainBit extends Component {
 			toggleContinueAction,
 			updateAnswerAttempt,
 			answerAttempt,
-			vocabList,
 		} = this.props;
 
 		const correctAnswer = () => {
