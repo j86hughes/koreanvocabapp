@@ -1,8 +1,10 @@
 import wordsArray from '../../../components/modules/vocab/greetings';
+import { UPDATE_CURRENT_WORD } from './constants';
 
-export const currentWordReducer = (state = wordsArray[2], action) => {
+export const currentWordReducer = (state = wordsArray[0], action) => {
   switch (action.type) {
-    case 'UPDATE_CURRENT_WORD': {
+    case UPDATE_CURRENT_WORD: {
+      console.log('WORD PASSED TO REDUCER IS: ', action.wordObj.korean);
       return action.wordObj;
     }
     default: {

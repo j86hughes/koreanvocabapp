@@ -2,16 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as ACTIONS from '../../../redux/modules';
 import textToSpeech from '../textToSpeech';
-import randomWordObjGen from '../wordGen';
-import wordsArray from '../vocab/greetings';
+import shuffleArray from '../shuffleArray';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
+import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
 import correctSound from '../../../sounds/correctSound1.mp3';
 import incorrectSound from '../../../sounds/incorrectSound.mp3';
 
 class MainBit extends Component {
+
+	constructor(props) {
+    super(props);
+    this.state = {
+			vocabList: shuffleArray(this.props.vocabList),
+			listLength: this.props.vocabList.length,
+			currentWordIndex: 0,
+		};
+  }
+
+	componentDidMount() {
+		this.props.updateCurrentWord(this.state.vocabList[0]);
+		textToSpeech(this.state.vocabList[0].korean[0]);
+	}
+
 	render() {
 		const {
 			answerBox,
@@ -28,22 +43,14 @@ class MainBit extends Component {
 			toggleContinueAction,
 			updateAnswerAttempt,
 			answerAttempt,
+			vocabList,
 		} = this.props;
-		const kToELabel = '한국어 => English';
-		const eToKLabel = 'English => 한국어';
-		const ENGLISH = 'english';
-		const KOREAN = 'korean';
-		const CONTINUE_LABEL = 'Continue';
-		const CHECK_LABEL = 'Check';
-		const CORRECT = 'correct';
-		const INCORRECT = 'incorrect';
-		const NONE = 'none';
 
 		const correctAnswer = () => {
-			if ((currentWord.english.indexOf(answerBox) > -1) && mode === KOREAN) {
+			if ((currentWord.english.indexOf(answerBox) > -1) && mode === CONSTANTS.KOREAN) {
 				return true;
 			}
-			if ((currentWord.korean.indexOf(answerBox) > -1) && mode === ENGLISH) {
+			if ((currentWord.korean.indexOf(answerBox) > -1) && mode === CONSTANTS.ENGLISH) {
 				return true;
 			}
 			return false;
@@ -53,31 +60,40 @@ class MainBit extends Component {
 			if (correctAnswer()) {
 				scorePlusOne();
 				toggleContinueAction();
-				updateAnswerAttempt(CORRECT);
-				correctSound.play();
+				updateAnswerAttempt(CONSTANTS.CORRECT);
 			} else {
-				updateAnswerAttempt(INCORRECT);
+				updateAnswerAttempt(CONSTANTS.INCORRECT);
 			}
 			totalPlusOne();
 		};
 
 		const onContinueHandler = () => {
-			const newWordObj = randomWordObjGen(wordsArray);
-			toggleContinueAction();
-			updateCurrentWord(newWordObj);
-			textToSpeech(newWordObj.korean);
-			updateAnswerAttempt(NONE);
+			if (this.state.currentWordIndex < this.state.listLength - 1) {
+				const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
+				toggleContinueAction();
+				updateCurrentWord(newWordObj);
+				textToSpeech(newWordObj.korean);
+				updateAnswerAttempt(CONSTANTS.NONE);
+				this.setState({currentWordIndex: this.state.currentWordIndex + 1});
+			} else {
+				alert('TOO LATE NAA MATE');
+			}
 		}
 
 		const onSkipHandler = () => {
-			const newWordObj = randomWordObjGen(wordsArray);
-			updateCurrentWord(newWordObj);
-			textToSpeech(newWordObj.korean);
-			totalPlusOne();
+			if (this.state.currentWordIndex < this.state.listLength - 1) {
+				const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
+				updateCurrentWord(newWordObj);
+				textToSpeech(newWordObj.korean);
+				totalPlusOne();
+				this.setState({currentWordIndex: this.state.currentWordIndex + 1});
+			} else {
+				alert('TOO LATE NAA MATE');
+			}
 		}
 
 		const onModeClickHandler = () => {
-			mode === KOREAN ? changeMode(ENGLISH) : changeMode(KOREAN)
+			mode === CONSTANTS.KOREAN ? changeMode(CONSTANTS.ENGLISH) : changeMode(CONSTANTS.KOREAN)
 		};
 
 		return (
@@ -87,9 +103,9 @@ class MainBit extends Component {
 						SCORE: {score} / {total}
 					</h3>
 					<div style={styles.vocabBox}>
-						<h1 style={{fontSize: 50}}>{mode === KOREAN ? currentWord.korean[0] : currentWord.english[0]}</h1>
-						{answerAttempt === CORRECT && <Icon className="material-icons" style={styles.correctAnswer}>done</Icon>}
-						{answerAttempt === INCORRECT && <Icon className="material-icons" style={styles.incorrectAnswer}>clear</Icon>}
+						<h1 style={{fontSize: 50}}>{mode === CONSTANTS.KOREAN ? currentWord.korean[0] : currentWord.english[0]}</h1>
+						{answerAttempt === CONSTANTS.CORRECT && <Icon className="material-icons" style={styles.correctAnswer}>done</Icon>}
+						{answerAttempt === CONSTANTS.INCORRECT && <Icon className="material-icons" style={styles.incorrectAnswer}>clear</Icon>}
 					</div>
 					<Button
 						style={{color: 'gray'}}
@@ -120,7 +136,7 @@ class MainBit extends Component {
 									showContinue ? onContinueHandler() : onCheckClickHandler()
 								}
 							>
-								{showContinue ? CONTINUE_LABEL : CHECK_LABEL}
+								{showContinue ? CONSTANTS.CONTINUE_LABEL : CONSTANTS.CHECK_LABEL}
 							</Button>
 						</div>
 					</div>
@@ -128,7 +144,7 @@ class MainBit extends Component {
 						style={styles.changeModeButton}
 						onClick={() => onModeClickHandler()}
 					>
-						{mode === 'korean' ? kToELabel : eToKLabel}
+						{mode === 'korean' ? CONSTANTS.KTOELABEL : CONSTANTS.ETOKLABEL}
 					</Button>
 				</div>
 			</div>
@@ -145,6 +161,7 @@ const mapStateToProps = state => {
 		mode: state.Mode,
 		showContinue: state.ShowContinue,
 		answerAttempt: state.AnswerAttempt,
+		vocabList: state.vocabList,
 	};
 };
 

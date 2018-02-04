@@ -5,6 +5,7 @@ import * as Score from './Score/actions';
 import * as ShowContinue from './ShowContinue/actions';
 import * as TotalWords from './TotalWords/actions';
 import * as UpdateWord from './UpdateWord/actions';
+import * as UpdateVocabList from './VocabList/actions';
 
 export {
   AnswerAttempt,
@@ -13,5 +14,6 @@ export {
   Score,
   ShowContinue,
   TotalWords,
-  UpdateWord
+  UpdateWord,
+  UpdateVocabList
 };

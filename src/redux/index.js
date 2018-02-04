@@ -13,6 +13,8 @@ import ShowContinue from './modules/ShowContinue/reducer';
 import { STORE_NAME as ShowContinueName } from './modules/ShowContinue/constants';
 import AnswerAttempt from './modules/AnswerAttempt/reducer';
 import { STORE_NAME as AnswerAttemptName } from './modules/AnswerAttempt/constants';
+import VocabList from './modules/VocabList/reducer';
+import { STORE_NAME as VocabListName } from './modules/VocabList/constants';
 
 const allReducers = combineReducers({
   [AnswerBoxName]: AnswerBox,
@@ -22,6 +24,7 @@ const allReducers = combineReducers({
   [ModeName]: Mode,
   [ShowContinueName]: ShowContinue,
   [AnswerAttemptName]: AnswerAttempt,
+  [VocabListName]: VocabList,
 })
 
 export default allReducers;
