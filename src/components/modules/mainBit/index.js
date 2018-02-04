@@ -8,6 +8,8 @@ import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
+import correctSound from '../../../sounds/correctSound1.mp3';
+import incorrectSound from '../../../sounds/incorrectSound.mp3';
 
 class MainBit extends Component {
 	render() {
@@ -52,6 +54,7 @@ class MainBit extends Component {
 				scorePlusOne();
 				toggleContinueAction();
 				updateAnswerAttempt(CORRECT);
+				correctSound.play();
 			} else {
 				updateAnswerAttempt(INCORRECT);
 			}
