@@ -7,7 +7,10 @@ import MainBit from './components/modules/mainBit';
 class App extends Component {
   render() {
 
-    let store = createStore(allReducers)
+    let store = createStore(
+      allReducers,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
 
     return (
       <Provider store={store}>

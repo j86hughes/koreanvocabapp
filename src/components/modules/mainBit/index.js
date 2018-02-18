@@ -8,8 +8,8 @@ import Icon from 'material-ui/Icon';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
-import correctSound from '../../../sounds/correctSound1.mp3';
-import incorrectSound from '../../../sounds/incorrectSound.mp3';
+// import correctSound from '../../../sounds/correctSound1.mp3';
+// import incorrectSound from '../../../sounds/incorrectSound.mp3';
 
 class MainBit extends Component {
 
@@ -27,79 +27,78 @@ class MainBit extends Component {
 		textToSpeech(this.state.vocabList[0].korean[0]);
 	}
 
+	correctAnswer() {
+		const {currentWord, answerBox, mode} = this.props;
+		if ((currentWord.english.indexOf(answerBox) > -1) && mode === CONSTANTS.KOREAN) {
+			return true;
+		}
+		if ((currentWord.korean.indexOf(answerBox) > -1) && mode === CONSTANTS.ENGLISH) {
+			return true;
+		}
+		return false;
+	}
+
+	onModeClickHandler() {
+		const {mode, changeMode} = this.props;
+		mode === CONSTANTS.KOREAN ? changeMode(CONSTANTS.ENGLISH) : changeMode(CONSTANTS.KOREAN)
+	};
+
+	onCheckClickHandler() {
+		const {scorePlusOne, toggleContinueAction, updateAnswerAttempt, totalPlusOne} = this.props;
+		if (this.correctAnswer()) {
+			scorePlusOne();
+			toggleContinueAction();
+			updateAnswerAttempt(CONSTANTS.CORRECT);
+		} else {
+			updateAnswerAttempt(CONSTANTS.INCORRECT);
+		}
+		totalPlusOne();
+	};
+
+	onContinueHandler() {
+		const {toggleContinueAction, updateAnswerAttempt, updateCurrentWord} = this.props;
+		if (this.state.currentWordIndex < this.state.listLength - 1) {
+			const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
+			toggleContinueAction();
+			updateCurrentWord(newWordObj);
+			textToSpeech(newWordObj.korean);
+			updateAnswerAttempt(CONSTANTS.NONE);
+			this.setState({currentWordIndex: this.state.currentWordIndex + 1});
+		} else {
+			alert('TOO LATE NAA MATE');
+		}
+	}
+
+	onSkipHandler() {
+		const {updateAnswerAttempt, updateCurrentWord, totalPlusOne} = this.props;
+		if (this.state.currentWordIndex < this.state.listLength - 1) {
+			const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
+			updateCurrentWord(newWordObj);
+			textToSpeech(newWordObj.korean);
+			totalPlusOne();
+			updateAnswerAttempt(CONSTANTS.NONE);
+			this.setState({currentWordIndex: this.state.currentWordIndex + 1});
+		} else {
+			alert('TOO LATE NAA MATE');
+		}
+	}
+
 	render() {
 		const {
-			answerBox,
 			currentWord,
 			updateTextBox,
-			updateCurrentWord,
-			scorePlusOne,
-			totalPlusOne,
 			mode,
 			score,
-			total,
-			changeMode,
+			totalWords,
 			showContinue,
-			toggleContinueAction,
-			updateAnswerAttempt,
 			answerAttempt,
 		} = this.props;
-
-		const correctAnswer = () => {
-			if ((currentWord.english.indexOf(answerBox) > -1) && mode === CONSTANTS.KOREAN) {
-				return true;
-			}
-			if ((currentWord.korean.indexOf(answerBox) > -1) && mode === CONSTANTS.ENGLISH) {
-				return true;
-			}
-			return false;
-		}
-
-		const onCheckClickHandler = () => {
-			if (correctAnswer()) {
-				scorePlusOne();
-				toggleContinueAction();
-				updateAnswerAttempt(CONSTANTS.CORRECT);
-			} else {
-				updateAnswerAttempt(CONSTANTS.INCORRECT);
-			}
-			totalPlusOne();
-		};
-
-		const onContinueHandler = () => {
-			if (this.state.currentWordIndex < this.state.listLength - 1) {
-				const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
-				toggleContinueAction();
-				updateCurrentWord(newWordObj);
-				textToSpeech(newWordObj.korean);
-				updateAnswerAttempt(CONSTANTS.NONE);
-				this.setState({currentWordIndex: this.state.currentWordIndex + 1});
-			} else {
-				alert('TOO LATE NAA MATE');
-			}
-		}
-
-		const onSkipHandler = () => {
-			if (this.state.currentWordIndex < this.state.listLength - 1) {
-				const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
-				updateCurrentWord(newWordObj);
-				textToSpeech(newWordObj.korean);
-				totalPlusOne();
-				this.setState({currentWordIndex: this.state.currentWordIndex + 1});
-			} else {
-				alert('TOO LATE NAA MATE');
-			}
-		}
-
-		const onModeClickHandler = () => {
-			mode === CONSTANTS.KOREAN ? changeMode(CONSTANTS.ENGLISH) : changeMode(CONSTANTS.KOREAN)
-		};
 
 		return (
 			<div style={styles.app}>
 				<header style={styles.appHeader}>
 					<h3 style={styles.scoreText}>
-						SCORE: {score} / {total}
+						SCORE: {score} / {totalWords}
 					</h3>
 					<div style={styles.vocabBox}>
 						<h1 style={{fontSize: 50}}>{mode === CONSTANTS.KOREAN ? currentWord.korean[0] : currentWord.english[0]}</h1>
@@ -125,14 +124,14 @@ class MainBit extends Component {
 							<Button
 								style={!showContinue ? styles.skipButton : styles.skipButtonDisabled}
 								disabled={showContinue}
-								onClick={() => onSkipHandler()}
+								onClick={() => this.onSkipHandler()}
 							>
 								Skip
 							</Button>
 							<Button
 								style={!showContinue ? styles.checkButton : styles.continueButton}
 								onClick={() =>
-									showContinue ? onContinueHandler() : onCheckClickHandler()
+									showContinue ? this.onContinueHandler() : this.onCheckClickHandler()
 								}
 							>
 								{showContinue ? CONSTANTS.CONTINUE_LABEL : CONSTANTS.CHECK_LABEL}
@@ -141,9 +140,9 @@ class MainBit extends Component {
 					</div>
 					<Button
 						style={styles.changeModeButton}
-						onClick={() => onModeClickHandler()}
+						onClick={() => this.onModeClickHandler()}
 					>
-						{mode === 'korean' ? CONSTANTS.KTOELABEL : CONSTANTS.ETOKLABEL}
+						{mode === CONSTANTS.KOREAN ? CONSTANTS.KTOELABEL : CONSTANTS.ETOKLABEL}
 					</Button>
 				</div>
 			</div>
@@ -153,26 +152,19 @@ class MainBit extends Component {
 
 const mapStateToProps = state => {
 	return {
-		answerBox: state.AnswerBox,
-		currentWord: state.UpdateWord,
-		score: state.Score,
-		total: state.TotalWords,
-		mode: state.Mode,
-		showContinue: state.ShowContinue,
-		answerAttempt: state.AnswerAttempt,
-		vocabList: state.vocabList,
+		...state.SUPER_REDUCER.toJS()
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		updateTextBox: text => dispatch(ACTIONS.AnswerBox.updateTextBox(text)),
-		updateCurrentWord: wordObj => dispatch(ACTIONS.UpdateWord.updateCurrentWord(wordObj)),
-		scorePlusOne: () => dispatch(ACTIONS.Score.scorePlusOne()),
-		totalPlusOne: () => dispatch(ACTIONS.TotalWords.totalPlusOne()),
-		changeMode: mode => dispatch(ACTIONS.Mode.changeMode(mode)),
-		toggleContinueAction: () => dispatch(ACTIONS.ShowContinue.showContinue()),
-		updateAnswerAttempt: (attempt) => dispatch(ACTIONS.AnswerAttempt.updateAnswerAttempt(attempt)),
+		updateTextBox: text => dispatch(ACTIONS.superReducerActions.updateTextBox(text)),
+		updateCurrentWord: wordObj => dispatch(ACTIONS.superReducerActions.updateCurrentWord(wordObj)),
+		scorePlusOne: () => dispatch(ACTIONS.superReducerActions.scorePlusOne()),
+		totalPlusOne: () => dispatch(ACTIONS.superReducerActions.totalPlusOne()),
+		changeMode: mode => dispatch(ACTIONS.superReducerActions.changeMode(mode)),
+		toggleContinueAction: () => dispatch(ACTIONS.superReducerActions.showContinue()),
+		updateAnswerAttempt: attempt => dispatch(ACTIONS.superReducerActions.updateAnswerAttempt(attempt)),
 	};
 };
 
