@@ -37,7 +37,7 @@ export const scorePlusOne = () => {
   }
 }
 
-export const showContinue = () => {
+export const toggleContinue = () => {
   return {
     type: SHOW_CONTINUE,
   }

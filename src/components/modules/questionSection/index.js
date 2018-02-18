@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as ACTIONS from '../../../redux/modules';
 import textToSpeech from '../textToSpeech';
 import shuffleArray from '../shuffleArray';
 import Button from 'material-ui/Button';
@@ -44,10 +42,10 @@ class MainBit extends Component {
 	};
 
 	onCheckClickHandler() {
-		const {scorePlusOne, toggleContinueAction, updateAnswerAttempt, totalPlusOne} = this.props;
+		const {scorePlusOne, toggleContinue, updateAnswerAttempt, totalPlusOne} = this.props;
 		if (this.correctAnswer()) {
 			scorePlusOne();
-			toggleContinueAction();
+			toggleContinue();
 			updateAnswerAttempt(CONSTANTS.CORRECT);
 		} else {
 			updateAnswerAttempt(CONSTANTS.INCORRECT);
@@ -56,10 +54,10 @@ class MainBit extends Component {
 	};
 
 	onContinueHandler() {
-		const {toggleContinueAction, updateAnswerAttempt, updateCurrentWord} = this.props;
+		const {toggleContinue, updateAnswerAttempt, updateCurrentWord} = this.props;
 		if (this.state.currentWordIndex < this.state.listLength - 1) {
 			const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
-			toggleContinueAction();
+			toggleContinue();
 			updateCurrentWord(newWordObj);
 			textToSpeech(newWordObj.korean);
 			updateAnswerAttempt(CONSTANTS.NONE);
@@ -150,22 +148,4 @@ class MainBit extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		...state.SUPER_REDUCER.toJS()
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		updateTextBox: text => dispatch(ACTIONS.superReducerActions.updateTextBox(text)),
-		updateCurrentWord: wordObj => dispatch(ACTIONS.superReducerActions.updateCurrentWord(wordObj)),
-		scorePlusOne: () => dispatch(ACTIONS.superReducerActions.scorePlusOne()),
-		totalPlusOne: () => dispatch(ACTIONS.superReducerActions.totalPlusOne()),
-		changeMode: mode => dispatch(ACTIONS.superReducerActions.changeMode(mode)),
-		toggleContinueAction: () => dispatch(ACTIONS.superReducerActions.showContinue()),
-		updateAnswerAttempt: attempt => dispatch(ACTIONS.superReducerActions.updateAnswerAttempt(attempt)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainBit));
+export default withStyles(styles)(MainBit);
