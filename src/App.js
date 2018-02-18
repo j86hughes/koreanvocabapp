@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import allReducers from './redux';
-import MainBit from './components/modules/mainBit';
+import QuestionSection from './components/pages/questionSection';
 
 class App extends Component {
   render() {
@@ -14,7 +14,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <MainBit />
+        <QuestionSection />
       </Provider>
     );
   }
