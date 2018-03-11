@@ -1,4 +1,4 @@
-const wordsArray = [
+export default [
   {
     korean: ['안녕하세요'],
     english: ['hello'],
@@ -39,6 +39,4 @@ const wordsArray = [
     korean: ['낮다'],
     english: ['to be low', 'low'],
   },
-]
-
-export default wordsArray;
+];
