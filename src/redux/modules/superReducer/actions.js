@@ -6,7 +6,10 @@ import {
   SHOW_CONTINUE,
   TOTAL_PLUS_ONE,
   UPDATE_CURRENT_WORD,
-  UPDATE_VOCAB_LIST
+  UPDATE_VOCAB_LIST,
+  CLEAR_VOCAB_LIST,
+  UPDATE_CORRECT_WORD_LIST,
+  UPDATE_INCORRECT_WORD_LIST,
 } from './constants';
 
 
@@ -56,9 +59,29 @@ export const updateCurrentWord = (wordObj) => {
   }
 }
 
-const updateVocabList = (vocabList) => {
+export const updateVocabList = (vocabList) => {
   return {
     type: UPDATE_VOCAB_LIST,
     vocabList,
+  }
+}
+
+export const clearVocabList = () => {
+  return {
+    type: CLEAR_VOCAB_LIST,
+  }
+}
+
+export const updateCorrectWordList = (word) => {
+  return {
+    type: UPDATE_CORRECT_WORD_LIST,
+    word,
+  }
+}
+
+export const updateIncorrectWordList = (word) => {
+  return {
+    type: UPDATE_INCORRECT_WORD_LIST,
+    word,
   }
 }

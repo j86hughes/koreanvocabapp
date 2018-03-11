@@ -6,7 +6,6 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    backgroundColor: 'red',
   },
   appHeader: {
     backgroundColor: '#222',

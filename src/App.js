@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import allReducers from './redux';
-import QuestionSection from './components/pages/questionSection';
+import RouteMothership from './components/pages/routeMothership';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -14,7 +15,9 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <QuestionSection />
+        <Router>
+          <RouteMothership />
+        </Router>
       </Provider>
     );
   }

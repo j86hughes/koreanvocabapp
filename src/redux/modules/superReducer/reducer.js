@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+ import Immutable from 'immutable';
 import {
   UPDATE_ANSWER_ATTEMPT,
   UPDATE_TEXT_BOX,
@@ -7,9 +7,13 @@ import {
   SCORE_PLUS_ONE,
   TOTAL_PLUS_ONE,
   UPDATE_CURRENT_WORD,
-  UPDATE_VOCAB_LIST} from './constants';
+  UPDATE_VOCAB_LIST,
+  CLEAR_VOCAB_LIST,
+  UPDATE_CORRECT_WORD_LIST,
+  UPDATE_INCORRECT_WORD_LIST,
+} from './constants';
 
-import wordsArray from '../../../components/modules/vocab/greetings';
+import wordsArray from '../../../components/modules/vocab';
 
 const initialState = Immutable.fromJS({
   answerAttempt: 'none',
@@ -18,8 +22,10 @@ const initialState = Immutable.fromJS({
   score: 0,
   showContinue: false,
   totalWords: 0,
-  currentWord: wordsArray[0],
-  vocabList: wordsArray
+  currentWord: wordsArray.basicVerbs[0],
+  vocabList: [],
+  correctWords: [],
+  incorrectWords: [],
 })
 
 const superReducer = (state = initialState, action) => {
@@ -62,10 +68,23 @@ const superReducer = (state = initialState, action) => {
         currentWord: action.wordObj,
       })
     }
+    case CLEAR_VOCAB_LIST: {
+      // return state.remove(vocabList);
+      return state.removeIn(state.vocabList)
+    }
     case UPDATE_VOCAB_LIST: {
+      console.log('updated vocab list with:', action.vocabList);
       return state.mergeDeep({
         vocabList: action.vocabList,
       })
+    }
+    case UPDATE_CORRECT_WORD_LIST: {
+      const array = state.getIn(["correctWords"]);
+      return state.updateIn(["correctWords", array.size], () => action.word);
+    }
+    case UPDATE_INCORRECT_WORD_LIST: {
+      const array = state.getIn(["incorrectWords"]);
+      return state.updateIn(["incorrectWords", array.size], () => action.word);
     }
     default: {
       return state;
