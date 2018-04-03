@@ -8,9 +8,12 @@ export default {
     height: '100vh',
   },
   appHeader: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     backgroundColor: '#222',
     padding: 20,
-    minHeight: 220,
+    minHeight: '50%',
     color: 'white',
   },
   appTitle: {
@@ -26,6 +29,12 @@ export default {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f2f7ff',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
   },
   correctAnswer: {
     color: 'lightGreen',

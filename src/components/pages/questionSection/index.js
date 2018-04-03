@@ -3,11 +3,7 @@ import { QuestionPage } from '../../../redux/modules/superReducer/container';
 
 class QuestionSectionPage extends Component {
   render() {
-    return (
-      <div>
-        <QuestionPage history={this.props.history}/>
-      </div>
-    )
+    return <QuestionPage history={this.props.history}/>
   }
 }
 
