@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import vocab from '../../modules/vocab';
+import GrammarTron from '../grammar/grammartron';
 
 class HomePage extends Component {
 
@@ -25,6 +26,7 @@ class HomePage extends Component {
         }}
       >
         <h1>단어 연습</h1>
+        <GrammarTron />
         <div style={{
             display: 'flex',
             flexDirection: 'column',
