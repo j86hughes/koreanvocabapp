@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from './header';
 import textToSpeech from '../textToSpeech';
 import shuffleArray from '../shuffleArray';
 import Button from 'material-ui/Button';
@@ -6,7 +7,6 @@ import Icon from 'material-ui/Icon';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
-import Progress from 'react-progressbar';
 // import correctSound from '../../../sounds/correctSound1.mp3';
 // import incorrectSound from '../../../sounds/incorrectSound.mp3';
 
@@ -47,6 +47,7 @@ class MainBit extends Component {
 
 	correctAnswer() {
 		const { currentWord, answerBox, mode } = this.props;
+
 		if (
 			currentWord.english.indexOf(answerBox) > -1 &&
 			mode === CONSTANTS.KOREAN
@@ -59,6 +60,7 @@ class MainBit extends Component {
 		) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -122,6 +124,16 @@ class MainBit extends Component {
 		}
 	}
 
+	returnOtherMeanings() {
+		const { currentWord } = this.props;
+		const matchingWordObjs = this.state.vocabList.filter(obj => {
+			if(obj.hasOwnProperty('multi')) {
+				return obj.korean[0] === currentWord.korean[0] && obj.multi !== currentWord.multi
+			}
+		})
+		return matchingWordObjs.map(obj => obj.english[0]);
+	}
+
 	render() {
 		const {
 			currentWord,
@@ -135,39 +147,15 @@ class MainBit extends Component {
 
 		return (
 			<div style={styles.app}>
-				<header style={styles.appHeader}>
-					<h3 style={styles.scoreText}>
-						SCORE: {score} / {totalWords}
-					</h3>
-					<div style={styles.vocabBox}>
-						<h1 style={{ fontSize: 50 }}>
-							{mode === CONSTANTS.KOREAN ? (
-								currentWord.korean[0]
-							) : (
-								currentWord.english[0]
-							)}
-						</h1>
-						{answerAttempt === CONSTANTS.CORRECT && (
-							<Icon className="material-icons" style={styles.correctAnswer}>
-								done
-							</Icon>
-						)}
-						{answerAttempt === CONSTANTS.INCORRECT && (
-							<Icon className="material-icons" style={styles.incorrectAnswer}>
-								clear
-							</Icon>
-						)}
-					</div>
-					<Button
-						style={{ color: 'gray' }}
-						onClick={() => textToSpeech(currentWord.korean)}
-					>
-						<Icon className="material-icons" style={{ color: 'gray' }}>
-							volume_up
-						</Icon>
-					</Button>
-					<Progress completed={this.state.progressPercentage} />
-				</header>
+				<Header
+					score={score}
+					totalWords={totalWords}
+					mode={mode}
+					currentWord={currentWord}
+					answerAttempt={answerAttempt}
+					progressPercentage={this.state.progressPercentage}
+					returnOtherMeanings={() => this.returnOtherMeanings()}
+				/>
 				<div style={styles.answerSectionContainer}>
 					<div style={styles.inputContainer}>
 						<input
@@ -177,14 +165,7 @@ class MainBit extends Component {
 								updateTextBox(e.target.value.trim());
 							}}
 						/>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								width: '100%',
-								justifyContent: 'space-between',
-							}}
-						>
+						<div style={styles.buttonContainer}>
 							<Button
 								style={
 									!showContinue ? styles.skipButton : styles.skipButtonDisabled

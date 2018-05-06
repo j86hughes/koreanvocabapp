@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Button from 'material-ui/Button';
 import vocab from '../../modules/vocab';
 
 class HomePage extends Component {
@@ -14,28 +15,38 @@ class HomePage extends Component {
     return (
       <div style={
         {
-          textAlign: 'center',
-          fontFamily: 'arial',
           display: 'flex',
           flexDirection: 'column',
-          height: '100vh'
+          textAlign: 'center',
+          alignItems: 'center',
+          fontFamily: 'arial',
+          minHeight: '100vh',
+          backgroundColor: '#f2f7ff',
         }}
       >
         <h1>단어 연습</h1>
-        <li
-          style={{listStyle: 'none'}}
-          onClick={() => updateVocabList(vocab.basicVerbs)}
-        >
-          <Link to='/questionsection'>Basic verbs 1</Link>
-        </li>
-        <li
-          style={{listStyle: 'none'}}
-          onClick={() => {
-            updateVocabList(vocab.greetings)
-          }}
-        >
-          <Link to='/questionsection'>Greetings</Link>
-        </li>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+
+          }}>
+          {vocab.map((item) => {
+            return (
+              <Link to='/questionsection' style={{textDecoration: 'none'}}>
+                <Button
+                  onClick={() => updateVocabList(item.vocab)}
+                  style={{
+                    maxWidth: 1000,
+                    minWidth: 400}}
+                  >
+                  {item.title}
+                </Button>
+              </Link>
+            )
+          })}
+        </div>
+
       </div>
     )
   }

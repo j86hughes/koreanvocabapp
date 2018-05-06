@@ -13,8 +13,6 @@ import {
   UPDATE_INCORRECT_WORD_LIST,
 } from './constants';
 
-import wordsArray from '../../../components/modules/vocab';
-
 const initialState = Immutable.fromJS({
   answerAttempt: 'none',
   answerBox: 'mate',
@@ -22,7 +20,7 @@ const initialState = Immutable.fromJS({
   score: 0,
   showContinue: false,
   totalWords: 0,
-  currentWord: wordsArray.basicVerbs[0],
+  currentWord: {english: ['hello'], korean: '안녕하세요'},
   vocabList: [],
   correctWords: [],
   incorrectWords: [],
@@ -64,17 +62,16 @@ const superReducer = (state = initialState, action) => {
       })
     }
     case UPDATE_CURRENT_WORD: {
-      return state.mergeDeep({
+      return state.merge({
         currentWord: action.wordObj,
       })
     }
     case CLEAR_VOCAB_LIST: {
-      // return state.remove(vocabList);
       return state.removeIn(state.vocabList)
     }
     case UPDATE_VOCAB_LIST: {
       console.log('updated vocab list with:', action.vocabList);
-      return state.mergeDeep({
+      return state.merge({
         vocabList: action.vocabList,
       })
     }
