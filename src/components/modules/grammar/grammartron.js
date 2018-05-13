@@ -2,42 +2,59 @@ import Hangul from 'hangul-js';
 
 
 const grammartron = () => {
-  const word = '타다';
+  const word = '가다';
 
-  const splitWord = word.split('');
+  const noDa = word.split('');
   //remove '다'
-  splitWord.pop();
+  noDa.pop();
 
   //get last char from word
-  const lastChar = splitWord[splitWord.length - 1];
+  const lastChar = noDa[noDa.length - 1];
 
-  let charArray = Hangul.disassemble(lastChar);
-  const lastHan = charArray[charArray.length - 1];
-  console.log('charArray', charArray);
+  let hanArray = Hangul.disassemble(lastChar);
+  const lastHan = hanArray[hanArray.length - 1];
+  console.log('lastHan', lastHan);
 
   let finalChar;
   let yah;
+  let allButLastChar = noDa.slice(0, noDa.length - 1).join('');
 
   if (!Hangul.endsWithConsonant(lastChar)) {
-    if (splitWord.length === 1) {
-      switch (lastHan) {
-        case 'ㅏ':
-          yah = lastChar;
-          break;
+    switch (lastHan) {
+      case 'ㅏ':
+        yah = allButLastChar + lastChar;
+        break;
 
-        case 'ㅗ':
-          yah = Hangul.assemble([...charArray, 'ㅏ']);
-          break;
+      case 'ㅗ':
+        yah = allButLastChar + Hangul.assemble([...hanArray, 'ㅏ']);
+        break;
 
-        case 'ㅣ':
-          charArray.pop();
-          let allButLastCharArray = splitWord.slice(0, splitWord.length - 1);
-          let allButLastChar = allButLastCharArray.join('');
-          finalChar = Hangul.assemble([...charArray, 'ㅕ']);
-          yah = allButLastChar + finalChar;
-        default:
-          break;
-      }
+      case 'ㅓ':
+        yah = allButLastChar + lastChar;
+        break;
+
+      case 'ㅜ':
+        yah = allButLastChar + Hangul.assemble([...hanArray, 'ㅓ']);
+        break;
+
+      case 'ㅣ':
+        hanArray.pop();
+        finalChar = Hangul.assemble([...hanArray, 'ㅕ']);
+        yah = allButLastChar + finalChar;
+        break;
+
+      default:
+        break;
+    }
+  } else {
+    switch (lastHan) {
+      case 'ㅂ':
+        hanArray.pop();
+        yah = allButLastChar + Hangul.assemble([...hanArray]) + '워';
+        break;
+
+      default:
+        break;
     }
   }
 
