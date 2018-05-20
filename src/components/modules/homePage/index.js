@@ -33,7 +33,7 @@ class HomePage extends Component {
           }}>
           {vocab.map((item) => {
             return (
-              <Link to='/questionsection' style={{textDecoration: 'none'}}>
+              <Link key={item.title} to='/questionsection' style={{textDecoration: 'none'}}>
                 <Button
                   onClick={() => updateVocabList(item.vocab)}
                   style={{

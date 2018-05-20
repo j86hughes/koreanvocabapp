@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
-import textToSpeech from '../textToSpeech';
 import shuffleArray from '../shuffleArray';
 import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
@@ -23,7 +21,6 @@ class MainBit extends Component {
 
 	componentDidMount() {
 		this.props.updateCurrentWord(this.state.vocabList[0]);
-		textToSpeech(this.state.vocabList[0].korean[0]);
 	}
 
 	updateWordProgressHandler() {
@@ -42,7 +39,6 @@ class MainBit extends Component {
 		const { updateCurrentWord } = this.props;
 		const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
 		updateCurrentWord(newWordObj);
-		textToSpeech(newWordObj.korean);
 	}
 
 	correctAnswer() {
@@ -130,6 +126,7 @@ class MainBit extends Component {
 			if(obj.hasOwnProperty('multi')) {
 				return obj.korean[0] === currentWord.korean[0] && obj.multi !== currentWord.multi
 			}
+			return null;
 		})
 		return matchingWordObjs.map(obj => obj.english[0]);
 	}
