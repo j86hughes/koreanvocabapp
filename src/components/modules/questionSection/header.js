@@ -35,10 +35,10 @@ const header = ({score, totalWords, mode, currentWord, answerAttempt, progressPe
         </div>
         {returnOtherMeanings().length > 0 && (
           <p>
-            (not: {returnOtherMeanings().map(word => {
-              const showComma = returnOtherMeanings().length > 1 ? ',' : '';
+            (not: {returnOtherMeanings().map((word, index) => {
+              const showComma = returnOtherMeanings().length > 1 && index !== 0 ? ', ' : '';
               return (
-                ` ${word}${showComma}`
+                `${showComma}${word}`
               )})}
             )
           </p>
