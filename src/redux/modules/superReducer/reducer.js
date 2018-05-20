@@ -1,4 +1,4 @@
- import Immutable from 'immutable';
+import Immutable from 'immutable';
 import {
   UPDATE_ANSWER_ATTEMPT,
   UPDATE_TEXT_BOX,
