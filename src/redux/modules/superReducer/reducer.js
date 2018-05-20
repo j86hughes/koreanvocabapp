@@ -20,7 +20,7 @@ const initialState = Immutable.fromJS({
   score: 0,
   showContinue: false,
   totalWords: 0,
-  currentWord: {english: ['hello'], korean: '안녕하세요'},
+  currentWord: {english: ['hello'], korean: ['안녕하세요']},
   vocabList: [],
   correctWords: [],
   incorrectWords: [],
@@ -70,7 +70,6 @@ const superReducer = (state = initialState, action) => {
       return state.removeIn(state.vocabList)
     }
     case UPDATE_VOCAB_LIST: {
-      console.log('updated vocab list with:', action.vocabList);
       return state.merge({
         vocabList: action.vocabList,
       })

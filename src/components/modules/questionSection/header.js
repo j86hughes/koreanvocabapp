@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Progress from 'react-progressbar';
 import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
