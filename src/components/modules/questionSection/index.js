@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
+import AnswerArea from './answerArea';
 import shuffleArray from '../shuffleArray';
-import Button from 'material-ui/Button';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
@@ -153,43 +153,18 @@ class MainBit extends Component {
 					progressPercentage={this.state.progressPercentage}
 					returnOtherMeanings={() => this.returnOtherMeanings()}
 				/>
-				<div style={styles.answerSectionContainer}>
-					<div style={styles.inputContainer}>
-						<input
-							type="text"
-							style={styles.input}
-							onChange={e => {
-								updateTextBox(e.target.value.trim());
-							}}
-						/>
-						<div style={styles.buttonContainer}>
-							<Button
-								style={
-									!showContinue ? styles.skipButton : styles.skipButtonDisabled
-								}
-								disabled={showContinue}
-								onClick={() => this.onSkipHandler()}
-							>
-								Skip
-							</Button>
-							<Button
-								style={
-									!showContinue ? styles.checkButton : styles.continueButton
-								}
-								onClick={() =>
-									showContinue
-										? this.onContinueHandler()
-										: this.onCheckClickHandler()}
-							>
-								{showContinue ? (
-									CONSTANTS.CONTINUE_LABEL
-								) : (
-									CONSTANTS.CHECK_LABEL
-								)}
-							</Button>
-						</div>
-					</div>
-					<Button
+				<AnswerArea
+					currentWord={currentWord}
+				  updateTextBox={(e) => updateTextBox(e)}
+				  mode={mode}
+				  score={score}
+				  totalWords={totalWords}
+				  showContinue={showContinue}
+				  answerAttempt={answerAttempt}
+					onCheckClickHandler={() => this.onCheckClickHandler()}
+					onContinueHandler={() => this.onContinueHandler()}
+				/>
+					{/* <Button
 						style={styles.changeModeButton}
 						onClick={() => this.onModeClickHandler()}
 					>
@@ -198,8 +173,7 @@ class MainBit extends Component {
 						) : (
 							CONSTANTS.ETOKLABEL
 						)}
-					</Button>
-				</div>
+					</Button> */}
 			</div>
 		);
 	}
