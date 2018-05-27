@@ -52,10 +52,11 @@ export const totalPlusOne = () => {
   }
 }
 
-export const updateCurrentWord = (wordObj) => {
+export const updateCurrentWord = (wordObj, mode) => {
   return {
     type: UPDATE_CURRENT_WORD,
     wordObj,
+    mode,
   }
 }
 

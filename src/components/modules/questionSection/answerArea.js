@@ -4,15 +4,11 @@ import * as CONSTANTS from './constants';
 import styles from './styles';
 
 const AnswerArea = ({
-  currentWord,
   updateTextBox,
-  mode,
-  score,
-  totalWords,
   showContinue,
-  answerAttempt,
   onCheckClickHandler,
   onContinueHandler,
+  onSkipHandler,
 }) => (
   <div style={styles.answerSectionContainer}>
     <div style={styles.inputContainer}>
@@ -27,7 +23,7 @@ const AnswerArea = ({
             !showContinue ? styles.skipButton : styles.skipButtonDisabled
           }
           disabled={showContinue}
-          onClick={() => this.onSkipHandler()}
+          onClick={() => onSkipHandler()}
         >
           Skip
         </Button>

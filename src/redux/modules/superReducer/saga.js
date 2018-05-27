@@ -2,7 +2,9 @@ import { put, takeEvery, all } from 'redux-saga/effects';
 import textToSpeech from '../../../components/modules/textToSpeech';
 
 export function* sayWord(action) {
-  yield textToSpeech(action.wordObj.korean[0]);
+  if(action.mode === 'korean') {
+    yield textToSpeech(action.wordObj.korean[0]);
+  }
 };
 
 function* watchUpdateWord() {

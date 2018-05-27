@@ -36,14 +36,13 @@ class MainBit extends Component {
 	}
 
 	updateWordHandler() {
-		const { updateCurrentWord } = this.props;
+		const { updateCurrentWord, mode } = this.props;
 		const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
-		updateCurrentWord(newWordObj);
+		updateCurrentWord(newWordObj, mode);
 	}
 
 	correctAnswer() {
 		const { currentWord, answerBox, mode } = this.props;
-
 		if (
 			currentWord.english.indexOf(answerBox) > -1 &&
 			mode === CONSTANTS.KOREAN
@@ -56,15 +55,7 @@ class MainBit extends Component {
 		) {
 			return true;
 		}
-
 		return false;
-	}
-
-	onModeClickHandler() {
-		const { mode, changeMode } = this.props;
-		mode === CONSTANTS.KOREAN
-			? changeMode(CONSTANTS.ENGLISH)
-			: changeMode(CONSTANTS.KOREAN);
 	}
 
 	onCheckClickHandler() {
@@ -154,26 +145,13 @@ class MainBit extends Component {
 					returnOtherMeanings={() => this.returnOtherMeanings()}
 				/>
 				<AnswerArea
-					currentWord={currentWord}
 				  updateTextBox={(e) => updateTextBox(e)}
-				  mode={mode}
-				  score={score}
-				  totalWords={totalWords}
 				  showContinue={showContinue}
-				  answerAttempt={answerAttempt}
 					onCheckClickHandler={() => this.onCheckClickHandler()}
 					onContinueHandler={() => this.onContinueHandler()}
+					onSkipHandler={() => this.onSkipHandler()}
 				/>
-					{/* <Button
-						style={styles.changeModeButton}
-						onClick={() => this.onModeClickHandler()}
-					>
-						{mode === CONSTANTS.KOREAN ? (
-							CONSTANTS.KTOELABEL
-						) : (
-							CONSTANTS.ETOKLABEL
-						)}
-					</Button> */}
+
 			</div>
 		);
 	}
