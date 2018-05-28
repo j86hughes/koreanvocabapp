@@ -366,20 +366,15 @@ export default [
   {
     multi: 3,
     korean: ['들다'],
-    english: ['to contain'],
+    english: ['to catch'],
   },
   {
     multi: 4,
     korean: ['들다'],
-    english: ['to catch'],
-  },
-  {
-    multi: 5,
-    korean: ['들다'],
     english: ['to raise'],
   },
   {
-    multi: 6,
+    multi: 5,
     korean: ['들다'],
     english: ['to hold'],
   },
@@ -412,7 +407,7 @@ export default [
   //66
   {
     korean: ['들어오다'],
-    english: ['	to enter', 'to come into'],
+    english: ['to enter', 'to come into'],
   },
   //67
   {
@@ -434,7 +429,7 @@ export default [
   {
     multi: 1,
     korean: ['따라가다'],
-    english: ['to follow, to go after'],
+    english: ['to follow', 'to go after'],
   },
   {
     multi: 2,
@@ -481,12 +476,12 @@ export default [
   //75
   {
     korean: ['떨다'],
-    english: ['to shake, to quiver'],
+    english: ['to shake', 'to quiver'],
   },
   //76
   {
     korean: ['떨리다'],
-    english: ['to quiver, to tremble'],
+    english: ['to quiver', 'to tremble'],
   },
   //77
   {
@@ -513,7 +508,7 @@ export default [
   {
     multi: 1,
     korean: ['뛰다'],
-    english: ['to run, to dash'],
+    english: ['to run', 'to dash'],
   },
   {
     multi: 2,
@@ -529,7 +524,7 @@ export default [
   {
     multi: 1,
     korean: ['뜨다'],
-    english: ['to float, to rise'],
+    english: ['to float', 'to rise'],
   },
   {
     korean: ['뜨다'],
@@ -543,7 +538,7 @@ export default [
   //82
   {
     korean: ['마련하다'],
-    english: ['to prepare, to arrange'],
+    english: ['to prepare', 'to arrange'],
   },
   //83
   {
@@ -559,7 +554,7 @@ export default [
   //84
   {
     korean: ['마시다'],
-    english: ['to drink, to have'],
+    english: ['to drink', 'to have'],
   },
   //85
   {
@@ -575,7 +570,7 @@ export default [
   {
     multi: 2,
     korean: ['막다'],
-    english: ['to stop, to prevent'],
+    english: ['to stop', 'to prevent'],
   },
   //87
   {
@@ -590,7 +585,7 @@ export default [
   //89
   {
     korean: ['만들다'],
-    english: ['to make, to produce'],
+    english: ['to make', 'to produce'],
   },
   //90
   {
@@ -615,7 +610,7 @@ export default [
   //94
   {
     korean: ['말하다'],
-    english: ['to say, to speak'],
+    english: ['to say', 'to speak'],
   },
   //95
   {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
+import AnswerArea from './answerArea';
 import shuffleArray from '../shuffleArray';
-import Button from 'material-ui/Button';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
@@ -36,14 +36,13 @@ class MainBit extends Component {
 	}
 
 	updateWordHandler() {
-		const { updateCurrentWord } = this.props;
+		const { updateCurrentWord, mode } = this.props;
 		const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
-		updateCurrentWord(newWordObj);
+		updateCurrentWord(newWordObj, mode);
 	}
 
 	correctAnswer() {
 		const { currentWord, answerBox, mode } = this.props;
-
 		if (
 			currentWord.english.indexOf(answerBox) > -1 &&
 			mode === CONSTANTS.KOREAN
@@ -56,15 +55,7 @@ class MainBit extends Component {
 		) {
 			return true;
 		}
-
 		return false;
-	}
-
-	onModeClickHandler() {
-		const { mode, changeMode } = this.props;
-		mode === CONSTANTS.KOREAN
-			? changeMode(CONSTANTS.ENGLISH)
-			: changeMode(CONSTANTS.KOREAN);
 	}
 
 	onCheckClickHandler() {
@@ -153,53 +144,14 @@ class MainBit extends Component {
 					progressPercentage={this.state.progressPercentage}
 					returnOtherMeanings={() => this.returnOtherMeanings()}
 				/>
-				<div style={styles.answerSectionContainer}>
-					<div style={styles.inputContainer}>
-						<input
-							type="text"
-							style={styles.input}
-							onChange={e => {
-								updateTextBox(e.target.value.trim());
-							}}
-						/>
-						<div style={styles.buttonContainer}>
-							<Button
-								style={
-									!showContinue ? styles.skipButton : styles.skipButtonDisabled
-								}
-								disabled={showContinue}
-								onClick={() => this.onSkipHandler()}
-							>
-								Skip
-							</Button>
-							<Button
-								style={
-									!showContinue ? styles.checkButton : styles.continueButton
-								}
-								onClick={() =>
-									showContinue
-										? this.onContinueHandler()
-										: this.onCheckClickHandler()}
-							>
-								{showContinue ? (
-									CONSTANTS.CONTINUE_LABEL
-								) : (
-									CONSTANTS.CHECK_LABEL
-								)}
-							</Button>
-						</div>
-					</div>
-					<Button
-						style={styles.changeModeButton}
-						onClick={() => this.onModeClickHandler()}
-					>
-						{mode === CONSTANTS.KOREAN ? (
-							CONSTANTS.KTOELABEL
-						) : (
-							CONSTANTS.ETOKLABEL
-						)}
-					</Button>
-				</div>
+				<AnswerArea
+				  updateTextBox={(e) => updateTextBox(e)}
+				  showContinue={showContinue}
+					onCheckClickHandler={() => this.onCheckClickHandler()}
+					onContinueHandler={() => this.onContinueHandler()}
+					onSkipHandler={() => this.onSkipHandler()}
+				/>
+
 			</div>
 		);
 	}

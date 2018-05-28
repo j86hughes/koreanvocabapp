@@ -60,6 +60,9 @@ export default {
   },
   changeModeButton: {
     marginTop: 25,
+    color: 'blue',
+    marginBottom: 20,
+    backgroundColor: 'white',
   },
   checkButton: {
     width: 100,

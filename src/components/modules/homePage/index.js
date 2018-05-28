@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import vocab from '../../modules/vocab';
+import * as CONSTANTS from '../questionSection/constants.js';
+import styles from '../questionSection/styles';
 
 class HomePage extends Component {
 
@@ -10,8 +12,15 @@ class HomePage extends Component {
     updateVocabList([]);
   }
 
+  onModeClickHandler() {
+  	const { mode, changeMode } = this.props;
+  	mode === CONSTANTS.KOREAN
+  		? changeMode(CONSTANTS.ENGLISH)
+  		: changeMode(CONSTANTS.KOREAN);
+  }
+
   render() {
-    const { updateVocabList } = this.props;
+    const { updateVocabList, mode } = this.props;
     return (
       <div style={
         {
@@ -28,9 +37,21 @@ class HomePage extends Component {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'flex-start',
+            alignItems: 'center',
 
           }}>
+
+          <Button
+            style={styles.changeModeButton}
+            onClick={() => this.onModeClickHandler()}
+          >
+            {mode === CONSTANTS.KOREAN ? (
+              CONSTANTS.KTOELABEL
+            ) : (
+              CONSTANTS.ETOKLABEL
+            )}
+          </Button>
+
           {vocab.map((item) => {
             return (
               <Link key={item.title} to='/questionsection' style={{textDecoration: 'none'}}>
@@ -38,7 +59,11 @@ class HomePage extends Component {
                   onClick={() => updateVocabList(item.vocab)}
                   style={{
                     maxWidth: 1000,
-                    minWidth: 400}}
+                    minWidth: 400,
+                    backgroundColor: 'blue',
+                    color: 'white',
+                    marginBottom: 20,
+                  }}
                   >
                   {item.title}
                 </Button>

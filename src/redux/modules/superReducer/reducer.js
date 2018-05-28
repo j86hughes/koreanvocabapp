@@ -34,6 +34,7 @@ const superReducer = (state = initialState, action) => {
       });
     }
     case UPDATE_TEXT_BOX: {
+      console.log('action.text', action.text);
       return state.mergeDeep({
         answerBox: action.text,
       });
