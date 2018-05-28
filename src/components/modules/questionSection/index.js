@@ -44,13 +44,13 @@ class MainBit extends Component {
 	correctAnswer() {
 		const { currentWord, answerBox, mode } = this.props;
 		if (
-			currentWord.english.indexOf(answerBox) > -1 &&
+			currentWord.english.indexOf(answerBox.trim()) > -1 &&
 			mode === CONSTANTS.KOREAN
 		) {
 			return true;
 		}
 		if (
-			currentWord.korean.indexOf(answerBox) > -1 &&
+			currentWord.korean.indexOf(answerBox.trim()) > -1 &&
 			mode === CONSTANTS.ENGLISH
 		) {
 			return true;
@@ -85,11 +85,13 @@ class MainBit extends Component {
 			toggleContinue,
 			updateAnswerAttempt,
 			history,
+			updateTextBox,
 		} = this.props;
 		if (this.state.currentWordIndex < this.state.listLength - 1) {
 			this.updateWordProgressHandler();
 			updateAnswerAttempt(CONSTANTS.NONE);
 			toggleContinue();
+			updateTextBox('');
 		} else {
 			history.push("/summary");
 		}
@@ -101,11 +103,13 @@ class MainBit extends Component {
 			updateIncorrectWordList,
 			currentWord,
 			history,
+			updateTextBox,
 		} = this.props;
 		if (this.state.currentWordIndex < this.state.listLength - 1) {
 			this.updateWordProgressHandler();
 			updateIncorrectWordList(currentWord);
 			totalPlusOne();
+			updateTextBox('');
 		} else {
 			history.push("/summary");
 		}
@@ -131,6 +135,7 @@ class MainBit extends Component {
 			totalWords,
 			showContinue,
 			answerAttempt,
+			answerBox,
 		} = this.props;
 
 		return (
@@ -150,6 +155,7 @@ class MainBit extends Component {
 					onCheckClickHandler={() => this.onCheckClickHandler()}
 					onContinueHandler={() => this.onContinueHandler()}
 					onSkipHandler={() => this.onSkipHandler()}
+					answerBox={answerBox}
 				/>
 
 			</div>
