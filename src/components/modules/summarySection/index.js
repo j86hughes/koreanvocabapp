@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Button from 'material-ui/Button';
 
 class SummaryPage extends Component {
   render() {
-    const { incorrectWords, score, totalWords } = this.props;
+    const { incorrectWords, score, totalWords, resetLists } = this.props;
     return (
       <div style={
         {
@@ -34,7 +35,20 @@ class SummaryPage extends Component {
         <li
           style={{listStyle: 'none'}}
         >
-          <Link to='/'>Home</Link>
+          <Link to='/'>
+            <Button
+              onClick={() => resetLists()}
+              style={{
+                maxWidth: 1000,
+                minWidth: 400,
+                backgroundColor: 'blue',
+                color: 'white',
+                marginBottom: 20,
+              }}
+              >
+              Home
+            </Button>
+          </Link>
         </li>
       </div>
     )

@@ -9,13 +9,15 @@ const AnswerArea = ({
   onCheckClickHandler,
   onContinueHandler,
   onSkipHandler,
+  answerBox,
 }) => (
   <div style={styles.answerSectionContainer}>
     <div style={styles.inputContainer}>
       <input
         type="text"
         style={styles.input}
-        onChange={e => updateTextBox(e.target.value.trim())}
+        onChange={e => updateTextBox(e.target.value)}
+        value={answerBox}
       />
       <div style={styles.buttonContainer}>
         <Button

@@ -1,13 +1,23 @@
-import topikVerbs100 from './topikVerbs100';
-import topikVerbs200 from './topikVerbs200';
+import topikVerbs1 from './topikVerbs1';
+import topikVerbs2 from './topikVerbs2';
+import topikVerbs3 from './topikVerbs3';
+import topikVerbs4 from './topikVerbs4';
 
 export default [
   {
-    vocab: topikVerbs100,
-    title: 'Topik Verbs 1-100',
+    vocab: topikVerbs1,
+    title: 'Topik Verbs 1',
   },
   {
-    vocab: topikVerbs200,
-    title: 'Topik Verbs 101-200',
+    vocab: topikVerbs2,
+    title: 'Topik Verbs 2',
+  },
+  {
+    vocab: topikVerbs3,
+    title: 'Topik Verbs 3',
+  },
+  {
+    vocab: topikVerbs4,
+    title: 'Topik Verbs 4',
   },
 ];
