@@ -16,7 +16,6 @@ const AnswerArea = ({
       <input
         type="text"
         style={styles.input}
-        // onChange={e => updateTextBox(e.target.value.trim())}
         onChange={e => updateTextBox(e.target.value)}
         value={answerBox}
       />

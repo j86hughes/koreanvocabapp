@@ -10,6 +10,7 @@ import {
   CLEAR_VOCAB_LIST,
   UPDATE_CORRECT_WORD_LIST,
   UPDATE_INCORRECT_WORD_LIST,
+  RESET_LISTS,
 } from './constants';
 
 
@@ -84,5 +85,11 @@ export const updateIncorrectWordList = (word) => {
   return {
     type: UPDATE_INCORRECT_WORD_LIST,
     word,
+  }
+}
+
+export const resetLists = () => {
+  return {
+    type: RESET_LISTS,
   }
 }
