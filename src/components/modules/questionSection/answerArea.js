@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import * as CONSTANTS from './constants';
 import styles from './styles';
@@ -47,6 +48,15 @@ const AnswerArea = ({
       </div>
     </div>
   </div>
-);
+)
+
+AnswerArea.propTypes = {
+  updateTextBox: PropTypes.func.isRequired,
+  showContinue: PropTypes.bool.isRequired,
+  onCheckClickHandler: PropTypes.func.isRequired,
+  onContinueHandler: PropTypes.func.isRequired,
+  onSkipHandler: PropTypes.func.isRequired,
+  answerBox: PropTypes.string.isRequired,
+}
 
 export default AnswerArea

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Progress from 'react-progressbar';
 import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
@@ -6,7 +7,15 @@ import textToSpeech from '../textToSpeech';
 import * as CONSTANTS from './constants';
 import styles from './styles';
 
-const header = ({score, totalWords, mode, currentWord, answerAttempt, progressPercentage, returnOtherMeanings}) => (
+const Header = ({
+  score,
+  totalWords,
+  mode,
+  currentWord,
+  answerAttempt,
+  progressPercentage,
+  returnOtherMeanings
+}) => (
   <header style={styles.appHeader}>
     <div style={{flexGrow: 2}}>
       <h3 style={styles.scoreText}>
@@ -68,4 +77,14 @@ const header = ({score, totalWords, mode, currentWord, answerAttempt, progressPe
   </header>
 )
 
-export default header;
+Header.propTypes = {
+  score: PropTypes.number.isRequired,
+  totalWords: PropTypes.number.isRequired,
+  mode: PropTypes.string.isRequired,
+  currentWord: PropTypes.object.isRequired,
+  answerAttempt: PropTypes.string.isRequired,
+  progressPercentage: PropTypes.number.isRequired,
+  returnOtherMeanings: PropTypes.func.isRequired,
+}
+
+export default Header;

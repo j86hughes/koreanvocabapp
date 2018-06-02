@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from './header';
 import AnswerArea from './answerArea';
 import shuffleArray from '../shuffleArray';
@@ -16,7 +17,7 @@ class MainBit extends Component {
 			listLength: this.props.vocabList.length,
 			currentWordIndex: 0,
 			progressPercentage: 0,
-		};
+		}
 	}
 
 	componentDidMount() {
@@ -159,8 +160,23 @@ class MainBit extends Component {
 				/>
 
 			</div>
-		);
+		)
 	}
+}
+
+MainBit.propTypes = {
+	updateCurrentWord: PropTypes.func.isRequired,
+	mode: PropTypes.string.isRequired,
+	currentWord: PropTypes.object.isRequired,
+	answerBox: PropTypes.string.isRequired,
+	scorePlusOne: PropTypes.func.isRequired,
+	toggleContinue: PropTypes.func.isRequired,
+	updateAnswerAttempt: PropTypes.func.isRequired,
+	totalPlusOne: PropTypes.func.isRequired,
+	updateCorrectWordList: PropTypes.func.isRequired,
+	updateIncorrectWordList: PropTypes.func.isRequired,
+	history: PropTypes.object.isRequired,
+	updateTextBox: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(MainBit);
