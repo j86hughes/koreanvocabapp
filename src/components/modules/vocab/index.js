@@ -18,6 +18,10 @@ export default [
     title: 'Topik Verbs 3',
   },
   {
+    vocab: topikVerbs4,
+    title: 'Topik Verbs 4',
+  },
+  {
     vocab: topikVerbs5,
     title: 'Topik Verbs 5',
   },
