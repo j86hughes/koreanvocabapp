@@ -23,13 +23,14 @@ const Header = ({
       </h3>
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={styles.vocabBox}>
-          <h1 style={{ fontSize: 50 }}>
+          {(currentWord.korean && currentWord.english)  &&
+          (<h1 style={{ fontSize: 50 }}>
             {mode === CONSTANTS.KOREAN ? (
               currentWord.korean[0]
             ) : (
               currentWord.english[0]
             )}
-          </h1>
+          </h1>)}
 
           {answerAttempt === CONSTANTS.CORRECT && (
             <Icon className="material-icons" style={styles.correctAnswer}>

@@ -21,7 +21,8 @@ class MainBit extends Component {
 	}
 
 	componentDidMount() {
-		this.props.updateCurrentWord(this.state.vocabList[0]);
+		const { updateCurrentWord } = this.props;
+		this.state.vocabList.length > 0 && updateCurrentWord(this.state.vocabList[0]);
 	}
 
 	updateWordProgressHandler() {
@@ -119,7 +120,7 @@ class MainBit extends Component {
 	returnOtherMeanings() {
 		const { currentWord } = this.props;
 		const matchingWordObjs = this.state.vocabList.filter(obj => {
-			if(obj.hasOwnProperty('multi')) {
+			if(obj.hasOwnProperty('multi') && currentWord.korean !== undefined) {
 				return obj.korean[0] === currentWord.korean[0] && obj.multi !== currentWord.multi
 			}
 			return null;
