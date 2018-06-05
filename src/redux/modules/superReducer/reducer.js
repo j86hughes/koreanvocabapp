@@ -16,12 +16,12 @@ import {
 
 const initialState = Immutable.fromJS({
   answerAttempt: 'none',
-  answerBox: 'mate',
+  answerBox: '',
   mode: 'korean',
   score: 0,
   showContinue: false,
   totalWords: 0,
-  currentWord: {english: ['hello'], korean: ['안녕하세요']},
+  currentWord: {},
   vocabList: [],
   correctWords: [],
   incorrectWords: [],

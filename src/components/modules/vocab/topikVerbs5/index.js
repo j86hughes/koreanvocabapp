@@ -278,7 +278,7 @@ export default [
   //49
   {
     korean: ['변하다'],
-    englihs: ['to change', 'to vary'],
+    english: ['to change', 'to vary'],
   },
   //50
   {
