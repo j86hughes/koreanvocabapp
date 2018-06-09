@@ -44,13 +44,13 @@ const Header = ({
           )}
         </div>
         {returnOtherMeanings().length > 0 && (
-          <p>
-            (not: {returnOtherMeanings().map((word, index) => {
+          <p style={{fontSize: 24}}>
+            <span style={{color: 'yellow'}}>not:</span> {returnOtherMeanings().map((word, index) => {
               const showComma = returnOtherMeanings().length > 1 && index !== 0 ? ', ' : '';
               return (
                 `${showComma}${word}`
               )})}
-            )
+
           </p>
         )}
       </div>
