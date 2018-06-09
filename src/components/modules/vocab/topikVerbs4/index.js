@@ -266,6 +266,7 @@ export default [
   //83
   {
     id: UUIDV4(),
+    korean: ['마르다'],
     english: ['to dry', 'to run dry'],
   },
   {
