@@ -118,15 +118,25 @@ class MainBit extends Component {
 	}
 
 	returnOtherMeanings() {
-		const { currentWord } = this.props;
+		const { currentWord, mode } = this.props;
 		const matchingWordObjs = this.state.vocabList.filter(obj => {
-			if(obj.hasOwnProperty('multi') && currentWord.korean !== undefined) {
-				return obj.korean[0] === currentWord.korean[0] && obj.multi !== currentWord.multi
+			if(currentWord[mode] !== undefined && obj.id !== currentWord.id) {
+				for(let i = 0; i < obj[mode].length; i++) {
+					for(let it = 0; it < currentWord[mode].length; it++) {
+						return obj[mode][i] === currentWord[mode][it];
+					}
+				}
 			}
 			return null;
 		})
-		return matchingWordObjs.map(obj => obj.english[0]);
-	}
+		return matchingWordObjs.map(obj => {
+			if(mode === 'english') {
+				return obj.korean[0];
+			} else {
+				return obj.english[0];
+			}
+		});
+	};
 
 	render() {
 		const {
@@ -159,7 +169,6 @@ class MainBit extends Component {
 					onSkipHandler={() => this.onSkipHandler()}
 					answerBox={answerBox}
 				/>
-
 			</div>
 		)
 	}
