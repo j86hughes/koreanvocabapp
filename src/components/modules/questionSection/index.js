@@ -138,6 +138,28 @@ class MainBit extends Component {
 		});
 	};
 
+	OneRightThreeWrong() {
+		const { currentWord } = this.props;
+		const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+		const getRandWord = () => getRandomInt(this.state.listLength);
+		let wrongList = [];
+
+		let i = 0;
+		while(i < 3) {
+			let yah = getRandWord();
+			if(this.state.vocabList[yah] !== undefined && this.state.vocabList[yah].id !== currentWord.id && !wrongList.includes(this.state.vocabList[yah])) {
+				wrongList.push(this.state.vocabList[yah]);
+				i++;
+			}
+		}
+
+		if(currentWord !== undefined) {
+			wrongList.push(currentWord);
+		}
+		
+		return shuffleArray(wrongList);
+	}
+
 	render() {
 		const {
 			currentWord,
@@ -162,6 +184,7 @@ class MainBit extends Component {
 					returnOtherMeanings={() => this.returnOtherMeanings()}
 				/>
 				<AnswerArea
+					OneRightThreeWrong={() => this.OneRightThreeWrong()}
 				  updateTextBox={(e) => updateTextBox(e)}
 				  showContinue={showContinue}
 					onCheckClickHandler={() => this.onCheckClickHandler()}
