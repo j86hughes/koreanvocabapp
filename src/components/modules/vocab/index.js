@@ -3,6 +3,7 @@ import topikVerbs2 from './topikVerbs2';
 import topikVerbs3 from './topikVerbs3';
 import topikVerbs4 from './topikVerbs4';
 import topikVerbs5 from './topikVerbs5';
+import topikVerbs6 from './topikVerbs6';
 
 export default [
   {
@@ -24,5 +25,9 @@ export default [
   {
     vocab: topikVerbs5,
     title: 'Topik Verbs 5',
+  },
+  {
+    vocab: topikVerbs6,
+    title: 'Topik Verbs 6',
   },
 ];
