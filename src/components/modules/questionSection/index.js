@@ -138,26 +138,25 @@ class MainBit extends Component {
 		});
 	};
 
-	OneRightThreeWrong() {
-		const { currentWord } = this.props;
+	getMultiList(currentWord) {
+		console.log('TRIGGERED!!!!');
 		const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 		const getRandWord = () => getRandomInt(this.state.listLength);
-		let wrongList = [];
+		let multiList = [];
 
-		let i = 0;
-		while(i < 3) {
-			let yah = getRandWord();
-			if(this.state.vocabList[yah] !== undefined && this.state.vocabList[yah].id !== currentWord.id && !wrongList.includes(this.state.vocabList[yah])) {
-				wrongList.push(this.state.vocabList[yah]);
-				i++;
+		if(currentWord !== undefined && currentWord.hasOwnProperty('id')) {
+			multiList.push(currentWord);
+			let i = 0;
+			while(i < 3) {
+				let yah = getRandWord();
+				if(this.state.vocabList[yah] !== undefined && this.state.vocabList[yah].id !== currentWord.id && !multiList.includes(this.state.vocabList[yah])) {
+					multiList.push(this.state.vocabList[yah]);
+					i++;
+				}
 			}
 		}
 
-		if(currentWord !== undefined) {
-			wrongList.push(currentWord);
-		}
-		
-		return shuffleArray(wrongList);
+		return shuffleArray(multiList);
 	}
 
 	render() {
@@ -184,7 +183,9 @@ class MainBit extends Component {
 					returnOtherMeanings={() => this.returnOtherMeanings()}
 				/>
 				<AnswerArea
-					OneRightThreeWrong={() => this.OneRightThreeWrong()}
+					multiMode
+					mode={mode}
+					getMultiList={() => this.getMultiList(currentWord)}
 				  updateTextBox={(e) => updateTextBox(e)}
 				  showContinue={showContinue}
 					onCheckClickHandler={() => this.onCheckClickHandler()}
