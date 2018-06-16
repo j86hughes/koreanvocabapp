@@ -28,7 +28,7 @@ export default [
   {
     id: UUIDV4(),
     korean: ['웃기다'],
-    english: ['to make somebody laugh'],
+    english: ['to make somebody laugh', 'to make someone laugh'],
   },
   {
     id: UUIDV4(),
@@ -189,7 +189,7 @@ export default [
   {
     id: UUIDV4(),
     korean: ['잃다'],
-    english: ['to lose, to be deprived of'],
+    english: ['to lose', 'to be deprived of'],
   },
   //26
   {
@@ -332,7 +332,7 @@ export default [
   {
     id: UUIDV4(),
     korean: ['정하다'],
-    english: ['to decide, to determine'],
+    english: ['to decide', 'to determine'],
   },
   //49
   {
@@ -344,6 +344,6 @@ export default [
   {
     id: UUIDV4(),
     korean: ['제공하다'],
-    english: ['to offer, to provide'],
+    english: ['to offer', 'to provide'],
   },
 ]
