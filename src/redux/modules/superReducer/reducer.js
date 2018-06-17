@@ -11,6 +11,7 @@ import {
   CLEAR_VOCAB_LIST,
   UPDATE_CORRECT_WORD_LIST,
   UPDATE_INCORRECT_WORD_LIST,
+  UPDATE_MULTI_LIST,
   RESET_LISTS,
 } from './constants';
 
@@ -25,6 +26,7 @@ const initialState = Immutable.fromJS({
   vocabList: [],
   correctWords: [],
   incorrectWords: [],
+  multiList: [],
 })
 
 const superReducer = (state = initialState, action) => {
@@ -83,11 +85,17 @@ const superReducer = (state = initialState, action) => {
       const array = state.getIn(["incorrectWords"]);
       return state.updateIn(["incorrectWords", array.size], () => action.word);
     }
+    case UPDATE_MULTI_LIST: {
+      return state.mergeDeep({
+        multiList: action.list,
+      });
+    }
     case RESET_LISTS: {
       return state.merge({
         correctWords: [],
         incorrectWords: [],
         vocabList: [],
+        multiList: [],
         score: 0,
         totalWords: 0,
         answerBox: '',

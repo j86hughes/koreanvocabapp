@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import vocab from '../../modules/vocab';
+import shuffleArray from '../../../redux/utils/shuffleArray';
 import * as CONSTANTS from '../questionSection/constants.js';
 import styles from '../questionSection/styles';
 
@@ -56,7 +57,7 @@ class HomePage extends Component {
             return (
               <Link key={item.title} to='/questionsection' style={{textDecoration: 'none'}}>
                 <Button
-                  onClick={() => updateVocabList(item.vocab)}
+                  onClick={() => updateVocabList(shuffleArray(item.vocab))}
                   style={{
                     maxWidth: 1000,
                     minWidth: 400,
