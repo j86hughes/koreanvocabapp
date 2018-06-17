@@ -22,12 +22,14 @@ class MainBit extends Component {
 	}
 
 	componentDidMount() {
-		const { updateCurrentWord, vocabList } = this.props;
+		const { updateCurrentWord, updateMultiList, vocabList } = this.props;
 		this.setState({
 			currentWordIndex: 0,
 			progressPercentage: 0,
 		})
+		const newMultiList = getMultiList(vocabList[0], vocabList);
 		vocabList && updateCurrentWord(vocabList[0]);
+		vocabList && updateMultiList(newMultiList);
 	}
 
 	updateWordProgressHandler() {
@@ -121,6 +123,7 @@ class MainBit extends Component {
 			answerAttempt,
 			answerBox,
 			vocabList,
+			multiList,
 		} = this.props;
 
 		return (
@@ -137,9 +140,9 @@ class MainBit extends Component {
 						returnOtherMeanings={() => getOtherMeanings(currentWord, mode, vocabList)}
 					/>
 					<AnswerArea
-						multiMode={false}
+						multiMode={true}
 						mode={mode}
-						getMultiList={() => this.getMultiList(currentWord, vocabList)}
+						multiList={multiList}
 					  updateTextBox={(e) => updateTextBox(e)}
 					  showContinue={showContinue}
 						onCheckClickHandler={() => this.onCheckClickHandler()}

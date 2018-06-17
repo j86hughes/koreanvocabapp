@@ -7,7 +7,6 @@ import styles from './styles';
 class AnswerArea extends Component {
   constructor(props) {
 		super(props);
-    const {getMultiList} = this.props;
 		this.state = {
       selectedBlock: null,
 		}
@@ -26,20 +25,26 @@ class AnswerArea extends Component {
       onContinueHandler,
       onSkipHandler,
       answerBox,
-      getMultiList,
+      multiList,
       mode,
       multiMode
     } = this.props;
 
     const myStyle = {
+      borderRadius: 5,
       display: 'flex',
       justifyContent: 'center',
-      height: 100,
-      width: 100,
+      height: 200,
+      width: 200,
       color: 'yellow',
       backgroundColor: 'blue',
       alignItems: 'center',
-      width: '50%',
+      // width: '50%',
+    }
+
+    const selectedStyle = {
+      backgroundColor: 'green',
+      color: 'white',
     }
 
     const selectBlock = (number) => {
@@ -58,34 +63,48 @@ class AnswerArea extends Component {
             value={answerBox}
           />)}
 
-          {multiMode &&
+          {multiMode && multiList.length > 0 &&
           (<div>
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: 20}}>
               <div
-                style={this.state.selectedBlock === 0 ? {...myStyle, backgroundColor: 'green'} : myStyle}
-                onClick={() => selectBlock(0)}
+                style={this.state.selectedBlock === 0 ? {...myStyle, ...selectedStyle} : myStyle}
+                onClick={() => {
+                  selectBlock(0);
+                  updateTextBox(multiList[0][this.getOppositeMode()][0]);
+                }}
                 >
-                {this.state.answerBlockArray[0][this.getOppositeMode()][0]}
+                {multiList[0][this.getOppositeMode()][0]}
               </div>
+              <div style={{width: 20}}></div>
               <div
-                style={this.state.selectedBlock === 1 ? {...myStyle, backgroundColor: 'green'} : myStyle}
-                onClick={() => selectBlock(1)}
+                style={this.state.selectedBlock === 1 ? {...myStyle, ...selectedStyle} : myStyle}
+                onClick={() => {
+                  selectBlock(1);
+                  updateTextBox(multiList[1][this.getOppositeMode()][0]);
+                }}
                 >
-                {this.state.answerBlockArray[1][this.getOppositeMode()][0]}
+                {multiList[1][this.getOppositeMode()][0]}
               </div>
             </div>
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
               <div
-                style={this.state.selectedBlock === 2 ? {...myStyle, backgroundColor: 'green'} : myStyle}
-                onClick={() => selectBlock(2)}
+                style={this.state.selectedBlock === 2 ? {...myStyle, ...selectedStyle} : myStyle}
+                onClick={() => {
+                  selectBlock(2);
+                  updateTextBox(multiList[2][this.getOppositeMode()][0]);
+                }}
                 >
-                {this.state.answerBlockArray[2][this.getOppositeMode()][0]}
+                {multiList[2][this.getOppositeMode()][0]}
               </div>
+              <div style={{width: 20}}></div>
               <div
-                style={this.state.selectedBlock === 3 ? {...myStyle, backgroundColor: 'green'} : myStyle}
-                onClick={() => selectBlock(3)}
+                style={this.state.selectedBlock === 3 ? {...myStyle, ...selectedStyle} : myStyle}
+                onClick={() => {
+                  selectBlock(3);
+                  updateTextBox(multiList[3][this.getOppositeMode()][0]);
+                }}
                 >
-                {this.state.answerBlockArray[3][this.getOppositeMode()][0]}
+                {multiList[3][this.getOppositeMode()][0]}
               </div>
             </div>
           </div>)}
@@ -104,10 +123,11 @@ class AnswerArea extends Component {
               style={
                 !showContinue ? styles.checkButton : styles.continueButton
               }
-              onClick={() =>
-                showContinue
-                  ? onContinueHandler()
-                  : onCheckClickHandler()}
+              onClick={() => {
+                showContinue ? onContinueHandler() : onCheckClickHandler();
+                this.setState({selectedBlock: null});
+              }
+                }
             >
               {showContinue ? (
                 CONSTANTS.CONTINUE_LABEL
