@@ -10,7 +10,6 @@ class AnswerArea extends Component {
     const {getMultiList} = this.props;
 		this.state = {
       selectedBlock: null,
-      answerBlockArray: getMultiList(),
 		}
 	}
 
@@ -49,9 +48,6 @@ class AnswerArea extends Component {
       })
     }
 
-    // console.log(answerBlockArray.map(item => item.english[0]));
-    console.log(this.state.answerBlockArray);
-
     return (
       <div style={styles.answerSectionContainer}>
         <div style={styles.inputContainer}>
@@ -62,7 +58,7 @@ class AnswerArea extends Component {
             value={answerBox}
           />)}
 
-          {multiMode && this.state.answerBlockArray.length === 4 &&
+          {multiMode &&
           (<div>
             <div style={{display: 'flex'}}>
               <div

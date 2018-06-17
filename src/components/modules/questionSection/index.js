@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Header from './header';
 import AnswerArea from './answerArea';
 import shuffleArray from '../shuffleArray';
+import getMultiList from './utils/getMultiList'
+import getOtherMeanings from './utils/getOtherMeanings';
+import isCorrectAnswer from './utils/isCorrectAnswer';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
@@ -13,51 +16,37 @@ class MainBit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			vocabList: shuffleArray(this.props.vocabList),
-			listLength: this.props.vocabList.length,
 			currentWordIndex: 0,
 			progressPercentage: 0,
 		}
 	}
 
 	componentDidMount() {
-		const { updateCurrentWord } = this.props;
-		this.state.vocabList.length > 0 && updateCurrentWord(this.state.vocabList[0]);
+		const { updateCurrentWord, vocabList } = this.props;
+		this.setState({
+			currentWordIndex: 0,
+			progressPercentage: 0,
+		})
+		vocabList && updateCurrentWord(vocabList[0]);
 	}
 
 	updateWordProgressHandler() {
-		this.updateProgressBar();
-		this.updateWordHandler();
+		const { vocabList } = this.props;
+		this.setState({ progressPercentage: this.updateProgressBar(this.state.currentWordIndex, vocabList.length) });
 		this.setState({ currentWordIndex: this.state.currentWordIndex + 1 });
+		this.updateWordAndMultiHandler();
 	}
 
-	updateProgressBar() {
-		const newProgressPercntage =
-			(this.state.currentWordIndex + 1) / this.state.listLength * 100;
-		this.setState({ progressPercentage: newProgressPercntage });
+	updateProgressBar(currentWordIndex, listLength) {
+		return (currentWordIndex + 1) / listLength * 100;
 	}
 
-	updateWordHandler() {
-		const { updateCurrentWord, mode } = this.props;
-		const newWordObj = this.state.vocabList[this.state.currentWordIndex + 1];
+	updateWordAndMultiHandler() {
+		const { updateCurrentWord, updateMultiList, mode, vocabList } = this.props;
+		const newWordObj = vocabList[this.state.currentWordIndex + 1];
+		const newMultiList = getMultiList(newWordObj, vocabList);
 		updateCurrentWord(newWordObj, mode);
-	}
-
-	correctAnswer() {
-		const { currentWord, answerBox, mode } = this.props;
-		if (
-			currentWord.english.indexOf(answerBox.trim()) > -1 &&
-			mode === CONSTANTS.KOREAN
-		) {
-			return true;
-		}
-		if (
-			currentWord.korean.indexOf(answerBox.trim()) > -1 &&
-			mode === CONSTANTS.ENGLISH
-		) {
-			return true;
-		}
-		return false;
+		updateMultiList(newMultiList);
 	}
 
 	onCheckClickHandler() {
@@ -69,8 +58,10 @@ class MainBit extends Component {
 			updateCorrectWordList,
 			updateIncorrectWordList,
 			currentWord,
+			answerBox,
+			mode,
 		} = this.props;
-		if (this.correctAnswer()) {
+		if (isCorrectAnswer(currentWord, answerBox, mode)) {
 			scorePlusOne();
 			updateAnswerAttempt(CONSTANTS.CORRECT);
 			updateCorrectWordList(currentWord);
@@ -88,8 +79,9 @@ class MainBit extends Component {
 			updateAnswerAttempt,
 			history,
 			updateTextBox,
+			vocabList,
 		} = this.props;
-		if (this.state.currentWordIndex < this.state.listLength - 1) {
+		if (this.state.currentWordIndex < vocabList.length - 1) {
 			this.updateWordProgressHandler();
 			updateAnswerAttempt(CONSTANTS.NONE);
 			toggleContinue();
@@ -106,8 +98,9 @@ class MainBit extends Component {
 			currentWord,
 			history,
 			updateTextBox,
+			vocabList
 		} = this.props;
-		if (this.state.currentWordIndex < this.state.listLength - 1) {
+		if (this.state.currentWordIndex < vocabList.length - 1) {
 			this.updateWordProgressHandler();
 			updateIncorrectWordList(currentWord);
 			totalPlusOne();
@@ -115,48 +108,6 @@ class MainBit extends Component {
 		} else {
 			history.push("/summary");
 		}
-	}
-
-	returnOtherMeanings() {
-		const { currentWord, mode } = this.props;
-		const matchingWordObjs = this.state.vocabList.filter(obj => {
-			if(currentWord[mode] !== undefined && obj.id !== currentWord.id) {
-				for(let i = 0; i < obj[mode].length; i++) {
-					for(let it = 0; it < currentWord[mode].length; it++) {
-						return obj[mode][i] === currentWord[mode][it];
-					}
-				}
-			}
-			return null;
-		})
-		return matchingWordObjs.map(obj => {
-			if(mode === 'english') {
-				return obj.korean[0];
-			} else {
-				return obj.english[0];
-			}
-		});
-	};
-
-	getMultiList(currentWord) {
-		console.log('TRIGGERED!!!!');
-		const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-		const getRandWord = () => getRandomInt(this.state.listLength);
-		let multiList = [];
-
-		if(currentWord !== undefined && currentWord.hasOwnProperty('id')) {
-			multiList.push(currentWord);
-			let i = 0;
-			while(i < 3) {
-				let yah = getRandWord();
-				if(this.state.vocabList[yah] !== undefined && this.state.vocabList[yah].id !== currentWord.id && !multiList.includes(this.state.vocabList[yah])) {
-					multiList.push(this.state.vocabList[yah]);
-					i++;
-				}
-			}
-		}
-
-		return shuffleArray(multiList);
 	}
 
 	render() {
@@ -169,30 +120,35 @@ class MainBit extends Component {
 			showContinue,
 			answerAttempt,
 			answerBox,
+			vocabList,
 		} = this.props;
 
 		return (
 			<div style={styles.app}>
-				<Header
-					score={score}
-					totalWords={totalWords}
-					mode={mode}
-					currentWord={currentWord}
-					answerAttempt={answerAttempt}
-					progressPercentage={this.state.progressPercentage}
-					returnOtherMeanings={() => this.returnOtherMeanings()}
-				/>
-				<AnswerArea
-					multiMode
-					mode={mode}
-					getMultiList={() => this.getMultiList(currentWord)}
-				  updateTextBox={(e) => updateTextBox(e)}
-				  showContinue={showContinue}
-					onCheckClickHandler={() => this.onCheckClickHandler()}
-					onContinueHandler={() => this.onContinueHandler()}
-					onSkipHandler={() => this.onSkipHandler()}
-					answerBox={answerBox}
-				/>
+				{currentWord.hasOwnProperty('id') &&
+				(<div style={styles.app}>
+					<Header
+						score={score}
+						totalWords={totalWords}
+						mode={mode}
+						currentWord={currentWord}
+						answerAttempt={answerAttempt}
+						progressPercentage={this.state.progressPercentage}
+						returnOtherMeanings={() => getOtherMeanings(currentWord, mode, vocabList)}
+					/>
+					<AnswerArea
+						multiMode={false}
+						mode={mode}
+						getMultiList={() => this.getMultiList(currentWord, vocabList)}
+					  updateTextBox={(e) => updateTextBox(e)}
+					  showContinue={showContinue}
+						onCheckClickHandler={() => this.onCheckClickHandler()}
+						onContinueHandler={() => this.onContinueHandler()}
+						onSkipHandler={() => this.onSkipHandler()}
+						answerBox={answerBox}
+					/>
+				</div>
+			)}
 			</div>
 		)
 	}
