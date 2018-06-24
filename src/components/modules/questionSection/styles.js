@@ -46,6 +46,12 @@ export default {
   },
   inputContainer: {
     width: '80%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   input: {
     width: '100%',
