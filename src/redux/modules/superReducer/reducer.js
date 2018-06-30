@@ -13,6 +13,7 @@ import {
   UPDATE_INCORRECT_WORD_LIST,
   UPDATE_MULTI_LIST,
   RESET_LISTS,
+  SET_MULTI_MODE,
 } from './constants';
 
 const initialState = Immutable.fromJS({
@@ -27,6 +28,7 @@ const initialState = Immutable.fromJS({
   correctWords: [],
   incorrectWords: [],
   multiList: [],
+  multiMode: true,
 })
 
 const superReducer = (state = initialState, action) => {
@@ -89,6 +91,11 @@ const superReducer = (state = initialState, action) => {
       return state.mergeDeep({
         multiList: action.list,
       });
+    }
+    case SET_MULTI_MODE : {
+      return state.merge({
+        multiMode: action.multiMode,
+      })
     }
     case RESET_LISTS: {
       return state.merge({

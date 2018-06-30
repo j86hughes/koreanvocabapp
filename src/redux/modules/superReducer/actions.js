@@ -13,6 +13,7 @@ import {
   UPDATE_MULTI_LIST,
   RESET_LISTS,
   JUMBLE_VOCAB_LIST,
+  SET_MULTI_MODE,
 } from './constants';
 
 
@@ -94,6 +95,13 @@ export const updateMultiList = (list) => {
   return {
     type: UPDATE_MULTI_LIST,
     list,
+  }
+}
+
+export const setMultiMode = (multiMode) => {
+  return {
+    type: SET_MULTI_MODE,
+    multiMode,
   }
 }
 
