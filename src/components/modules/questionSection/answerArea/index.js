@@ -7,22 +7,22 @@ import styles from '../styles';
 
 class AnswerArea extends Component {
   constructor(props) {
-		super(props);
-		this.state = {
-      selectedBlock: null,
-		}
-	}
+    super(props);
+    this.state = {
+      selectedBlock: null
+    };
+  }
 
   getOppositeMode = () => {
     const { mode } = this.props;
     return mode === 'english' ? 'korean' : 'english';
-  }
+  };
 
-  selectBlock = (number) => {
+  selectBlock = number => {
     this.setState({
-      selectedBlock: number,
-    })
-  }
+      selectedBlock: number
+    });
+  };
 
   render() {
     const {
@@ -40,23 +40,26 @@ class AnswerArea extends Component {
     return (
       <div style={styles.answerSectionContainer}>
         <div style={styles.inputContainer}>
+          <div style={styles.answerInputContainer}>
+            {multiMode &&
+              multiList.length > 0 && (
+                <MultiChoice
+                  selectedBlock={this.state.selectedBlock}
+                  multiList={multiList}
+                  selectBlock={this.selectBlock.bind(this)}
+                  updateTextBox={updateTextBox}
+                  getOppositeMode={this.getOppositeMode.bind(this)}
+                />
+              )}
 
-          <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-            {multiMode && multiList.length > 0 &&
-            (<MultiChoice
-              selectedBlock={this.state.selectedBlock}
-              multiList={multiList}
-              selectBlock={this.selectBlock.bind(this)}
-              updateTextBox={updateTextBox}
-              getOppositeMode={this.getOppositeMode.bind(this)}
-            />)}
-
-            {!multiMode && (<input
-              type="text"
-              style={styles.input}
-              onChange={e => updateTextBox(e.target.value)}
-              value={answerBox}
-            />)}
+            {!multiMode && (
+              <input
+                type="text"
+                style={styles.input}
+                onChange={e => updateTextBox(e.target.value)}
+                value={answerBox}
+              />
+            )}
           </div>
 
           <div>
@@ -76,25 +79,20 @@ class AnswerArea extends Component {
                 }
                 onClick={() => {
                   showContinue ? onContinueHandler() : onCheckClickHandler();
-                  this.setState({selectedBlock: null});
-                }
-                  }
+                  this.setState({ selectedBlock: null });
+                }}
               >
-                {showContinue ? (
-                  CONSTANTS.CONTINUE_LABEL
-                ) : (
-                  CONSTANTS.CHECK_LABEL
-                )}
+                {showContinue
+                  ? CONSTANTS.CONTINUE_LABEL
+                  : CONSTANTS.CHECK_LABEL}
               </Button>
             </div>
           </div>
-
         </div>
       </div>
-    )
+    );
   }
 }
-
 
 AnswerArea.propTypes = {
   updateTextBox: PropTypes.func.isRequired,
@@ -102,7 +100,7 @@ AnswerArea.propTypes = {
   onCheckClickHandler: PropTypes.func.isRequired,
   onContinueHandler: PropTypes.func.isRequired,
   onSkipHandler: PropTypes.func.isRequired,
-  answerBox: PropTypes.string.isRequired,
-}
+  answerBox: PropTypes.string.isRequired
+};
 
-export default AnswerArea
+export default AnswerArea;

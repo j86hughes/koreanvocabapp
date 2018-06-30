@@ -21,6 +21,7 @@ export default {
     justifyContent: 'space-between',
     flexGrow: 1,
     alignItems: 'stretch',
+    marginBottom: 20,
   },
   multiContainer: {
     display: 'flex',

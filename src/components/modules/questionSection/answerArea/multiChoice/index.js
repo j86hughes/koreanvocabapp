@@ -15,7 +15,7 @@ const RenderButton = ({selectedBlock, multiList, selectBlock, updateTextBox, get
 
 const multiChoice = ({selectedBlock, multiList, selectBlock, updateTextBox, getOppositeMode}) => (
   <div style={styles.multiContainer}>
-    <div style={{...styles.buttonRow, marginBottom: 20}}>
+    <div style={styles.buttonRow}>
       {multiList.map((yo, index) => {
         return (
           <RenderButton

@@ -30,6 +30,11 @@ export default {
     alignItems: 'center',
     backgroundColor: '#f2f7ff',
   },
+  answerInputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
   buttonContainer: {
     display: 'flex',
     flexDirection: 'row',
