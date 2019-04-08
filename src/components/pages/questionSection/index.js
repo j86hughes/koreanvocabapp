@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { QuestionPage } from '../../../redux/modules/superReducer/container';
 
-class QuestionSectionPage extends Component {
-  render() {
-    return <QuestionPage history={this.props.history}/>
-  }
-}
+const QuestionSectionPage = ({ history }) => (
+  <QuestionPage history={history}/>
+)
 
 export default QuestionSectionPage;

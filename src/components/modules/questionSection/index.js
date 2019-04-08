@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from './header';
 import AnswerArea from './answerArea';
-import shuffleArray from '../shuffleArray';
 import getMultiList from './utils/getMultiList';
 import getOtherMeanings from './utils/getOtherMeanings';
 import isCorrectAnswer from './utils/isCorrectAnswer';
 import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
-// import correctSound from '../../../sounds/correctSound1.mp3';
-// import incorrectSound from '../../../sounds/incorrectSound.mp3';
 
 class MainBit extends Component {
   constructor(props) {
@@ -23,10 +20,6 @@ class MainBit extends Component {
 
   componentDidMount() {
     const { updateCurrentWord, updateMultiList, vocabList } = this.props;
-    this.setState({
-      currentWordIndex: 0,
-      progressPercentage: 0
-    });
     const newMultiList = getMultiList(vocabList[0], vocabList);
     vocabList && updateCurrentWord(vocabList[0]);
     vocabList && updateMultiList(newMultiList);
