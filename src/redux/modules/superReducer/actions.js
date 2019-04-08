@@ -12,7 +12,6 @@ import {
   UPDATE_INCORRECT_WORD_LIST,
   UPDATE_MULTI_LIST,
   RESET_LISTS,
-  JUMBLE_VOCAB_LIST,
   SET_MULTI_MODE,
 } from './constants';
 

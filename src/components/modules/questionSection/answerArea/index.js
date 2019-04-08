@@ -33,7 +33,6 @@ class AnswerArea extends Component {
       onSkipHandler,
       answerBox,
       multiList,
-      mode,
       multiMode
     } = this.props;
 

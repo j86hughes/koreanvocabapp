@@ -88,7 +88,7 @@ const superReducer = (state = initialState, action) => {
       return state.updateIn(["incorrectWords", array.size], () => action.word);
     }
     case UPDATE_MULTI_LIST: {
-      return state.mergeDeep({
+      return state.merge({
         multiList: action.list,
       });
     }
