@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from './header';
 import AnswerArea from './answerArea';
@@ -9,58 +9,56 @@ import * as CONSTANTS from './constants';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
 
-class MainBit extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentWordIndex: 0,
-      progressPercentage: 0
-    };
-  }
+const QuestionSection = ({
+  updateCurrentWord,
+  updateMultiList,
+  vocabList,
+  mode,
+  scorePlusOne,
+  toggleContinue,
+  updateAnswerAttempt,
+  totalPlusOne,
+  updateCorrectWordList,
+  updateIncorrectWordList,
+  currentWord,
+  answerBox,
+  updateTextBox,
+  score,
+  totalWords,
+  showContinue,
+  history,
+  answerAttempt,
+  multiList,
+  multiMode,
+  classes,
+}) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [progressPercentage, setProgressPercentage] = useState(0);
 
-  componentDidMount() {
-    const { updateCurrentWord, updateMultiList, vocabList } = this.props;
+  useEffect(() => {
     const newMultiList = getMultiList(vocabList[0], vocabList);
     vocabList && updateCurrentWord(vocabList[0]);
     vocabList && updateMultiList(newMultiList);
-  }
+  }, [])
 
-  updateWordProgressHandler() {
-    const { vocabList } = this.props;
-    this.setState({
-      progressPercentage: this.updateProgressBar(
-        this.state.currentWordIndex,
-        vocabList.length
-      )
-    });
-    this.setState({ currentWordIndex: this.state.currentWordIndex + 1 });
-    this.updateWordAndMultiHandler();
-  }
-
-  updateProgressBar(currentWordIndex, listLength) {
+  const updateProgressBar = (currentWordIndex, listLength) => {
     return ((currentWordIndex + 1) / listLength) * 100;
   }
 
-  updateWordAndMultiHandler() {
-    const { updateCurrentWord, updateMultiList, mode, vocabList } = this.props;
-    const newWordObj = vocabList[this.state.currentWordIndex + 1];
+  const updateWordAndMultiHandler = () => {
+    const newWordObj = vocabList[currentWordIndex + 1];
     const newMultiList = getMultiList(newWordObj, vocabList);
     updateCurrentWord(newWordObj, mode);
     updateMultiList(newMultiList);
   }
 
-  onCheckClickHandler() {
-    const {
-      scorePlusOne,
-      toggleContinue,
-      updateAnswerAttempt,
-      totalPlusOne,
-      updateCorrectWordList,
-      updateIncorrectWordList,
-      currentWord,
-      answerBox,
-      mode
-    } = this.props;
+  const updateWordProgressHandler = () => {
+    setProgressPercentage(updateProgressBar(currentWordIndex, vocabList.length));
+    setCurrentWordIndex(currentWordIndex + 1);
+    updateWordAndMultiHandler();
+  }
+
+  const onCheckClickHandler = () => {
     if (isCorrectAnswer(currentWord, answerBox, mode)) {
       scorePlusOne();
       updateAnswerAttempt(CONSTANTS.CORRECT);
@@ -73,16 +71,9 @@ class MainBit extends Component {
     toggleContinue();
   }
 
-  onContinueHandler() {
-    const {
-      toggleContinue,
-      updateAnswerAttempt,
-      history,
-      updateTextBox,
-      vocabList
-    } = this.props;
-    if (this.state.currentWordIndex < vocabList.length - 1) {
-      this.updateWordProgressHandler();
+  const onContinueHandler = () => {
+    if (currentWordIndex < vocabList.length - 1) {
+      updateWordProgressHandler();
       updateAnswerAttempt(CONSTANTS.NONE);
       toggleContinue();
       updateTextBox('');
@@ -91,17 +82,9 @@ class MainBit extends Component {
     }
   }
 
-  onSkipHandler() {
-    const {
-      totalPlusOne,
-      updateIncorrectWordList,
-      currentWord,
-      history,
-      updateTextBox,
-      vocabList
-    } = this.props;
-    if (this.state.currentWordIndex < vocabList.length - 1) {
-      this.updateWordProgressHandler();
+  const onSkipHandler = () => {
+    if (currentWordIndex < vocabList.length - 1) {
+      updateWordProgressHandler();
       updateIncorrectWordList(currentWord);
       totalPlusOne();
       updateTextBox('');
@@ -110,55 +93,35 @@ class MainBit extends Component {
     }
   }
 
-  render() {
-    const {
-      currentWord,
-      updateTextBox,
-      mode,
-      score,
-      totalWords,
-      showContinue,
-      answerAttempt,
-      answerBox,
-      vocabList,
-      multiList,
-      multiMode
-    } = this.props;
-
-    return (
-      <div style={styles.app}>
-        {currentWord.hasOwnProperty('id') && (
-          <div style={styles.app}>
-            <Header
-              score={score}
-              totalWords={totalWords}
-              mode={mode}
-              currentWord={currentWord}
-              answerAttempt={answerAttempt}
-              progressPercentage={this.state.progressPercentage}
-              returnOtherMeanings={() =>
-                getOtherMeanings(currentWord, mode, vocabList)
-              }
-            />
-            <AnswerArea
-              multiMode={multiMode}
-              mode={mode}
-              multiList={multiList}
-              updateTextBox={e => updateTextBox(e)}
-              showContinue={showContinue}
-              onCheckClickHandler={() => this.onCheckClickHandler()}
-              onContinueHandler={() => this.onContinueHandler()}
-              onSkipHandler={() => this.onSkipHandler()}
-              answerBox={answerBox}
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
+  return currentWord.hasOwnProperty('id') ? (
+    <div className={classes.app}>
+      <Header
+        score={score}
+        totalWords={totalWords}
+        mode={mode}
+        currentWord={currentWord}
+        answerAttempt={answerAttempt}
+        progressPercentage={progressPercentage}
+        returnOtherMeanings={() =>
+          getOtherMeanings(currentWord, mode, vocabList)
+        }
+      />
+      <AnswerArea
+        multiMode={multiMode}
+        mode={mode}
+        multiList={multiList}
+        updateTextBox={e => updateTextBox(e)}
+        showContinue={showContinue}
+        onCheckClickHandler={() => onCheckClickHandler()}
+        onContinueHandler={() => onContinueHandler()}
+        onSkipHandler={() => onSkipHandler()}
+        answerBox={answerBox}
+      />
+    </div>
+  ) : null
 }
 
-MainBit.propTypes = {
+QuestionSection.propTypes = {
   updateCurrentWord: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   currentWord: PropTypes.object.isRequired,
@@ -173,4 +136,4 @@ MainBit.propTypes = {
   updateTextBox: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(MainBit);
+export default withStyles(styles)(QuestionSection);
