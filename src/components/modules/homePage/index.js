@@ -30,7 +30,7 @@ const HomePage = ({
         <div style={styles.optionButtonsContainer}>
           <Button
             style={styles.changeModeButton}
-            onClick={() => this.onModeClickHandler()}
+            onClick={() => onModeClickHandler()}
           >
             {mode === CONSTANTS.KOREAN
               ? CONSTANTS.KTOELABEL
